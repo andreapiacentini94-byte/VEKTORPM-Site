@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEKTOR PM — Independent Project Management Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cobalt:#0047AB;
+    --cobalt-dark:#003a8c;
+    --teal:#1A7A6B;
+    --teal-dark:#14655a;
+    --ink:#1A2A3A;
+    --ink-soft:#5a6775;
+    --line:#e4e8ee;
+    --bg:#ffffff;
+    --bg-soft:#f6f8fb;
+    --radius:14px;
+    --shadow:0 4px 24px rgba(26,42,58,.07);
+    --shadow-hover:0 14px 40px rgba(0,71,171,.16);
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ---------- Layout helpers ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{
+    font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:14px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--cobalt);color:#fff;font-weight:600;font-size:.92rem;
+    padding:13px 26px;border-radius:999px;border:none;cursor:pointer;
+    transition:transform .25s,box-shadow .25s,background .25s;letter-spacing:.02em;
+  }
+  .btn:hover{background:var(--cobalt-dark);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+  .btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+  .btn--ghost:hover{background:rgba(255,255,255,.12);border-color:#fff}
+  .btn--teal{background:var(--teal)}
+  .btn--teal:hover{background:var(--teal-dark)}
+
+  /* ---------- Navigation ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{font-weight:700;font-size:1.18rem;letter-spacing:.04em;display:flex;align-items:center;gap:9px}
+  .logo .mark{
+    width:22px;height:22px;border-radius:6px;
+    background:linear-gradient(135deg,var(--cobalt),var(--teal));
+    position:relative;flex:none;
+  }
+  .logo .mark::after{content:"";position:absolute;inset:6px;border-radius:3px;background:#fff;opacity:.9}
+  .nav-menu{display:flex;align-items:center;gap:30px}
+  .nav-menu a{font-size:.92rem;font-weight:500;color:var(--ink-soft);transition:color .2s}
+  .nav-menu a:hover,.nav-menu a.active{color:var(--cobalt)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;font-size:1.5rem;color:var(--ink)}
+
+  /* ---------- Language switch ---------- */
+  .lang-dd{position:relative;display:inline-block}
+  .lang-current{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;
+    padding:6px 10px;background:#fff;cursor:pointer;font-family:inherit;font-size:.8rem;font-weight:600;
+    color:var(--ink);line-height:1;transition:border-color .2s}
+  .lang-current:hover{border-color:var(--cobalt)}
+  .lang-current .chev{width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+    transform:rotate(45deg);margin-top:-3px;transition:transform .2s}
+  .lang-dd.open .lang-current .chev{transform:rotate(-135deg);margin-top:2px}
+  .lang-menu{position:absolute;top:calc(100% + 6px);right:0;min-width:100%;background:#fff;border:1px solid var(--line);
+    border-radius:8px;box-shadow:0 8px 24px rgba(26,42,58,.12);overflow:hidden;z-index:60;display:none}
+  .lang-dd.open .lang-menu{display:block}
+  .lang-opt{display:block;width:100%;text-align:left;border:none;background:none;cursor:pointer;
+    padding:8px 14px;font-family:inherit;font-size:.8rem;font-weight:600;color:var(--ink-soft);line-height:1;
+    transition:background .15s,color .15s;white-space:nowrap}
+  .lang-opt:hover{background:var(--bg-soft);color:var(--ink)}
+  .lang-opt.active{color:var(--cobalt)}
+  /* quiz dark bar variant */
+  .qz-lang{margin-left:auto}
+  .qz-lang .lang-current{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff}
+  .qz-lang .lang-current:hover{border-color:#fff}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--bg-soft)}
+  .hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+  .hero-inner{position:relative;z-index:2;padding:118px 0 128px;max-width:840px}
+  .hero h1{
+    font-size:clamp(2.6rem,6vw,4.6rem);font-weight:700;line-height:1.04;
+    letter-spacing:-.02em;color:var(--ink);
+  }
+  .hero h1 .accent{
+    background:linear-gradient(120deg,var(--cobalt),var(--teal));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.kicker{font-size:1.06rem;color:var(--ink-soft);margin-top:22px;max-width:520px}
+  .hero .hero-cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+
+  /* ---------- Sections ---------- */
+  section.block{padding:92px 0}
+  section.block.tight{padding:64px 0}
+  h2.section-title{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.01em;line-height:1.12}
+
+  /* Split intro */
+  .split{display:grid;grid-template-columns:1fr 1.05fr;gap:54px;align-items:start}
+  .split .lead{font-size:clamp(1.35rem,2.4vw,1.85rem);font-weight:600;line-height:1.28;letter-spacing:-.01em}
+  .split .lead .hl{color:var(--cobalt)}
+  .split .body p{color:var(--ink-soft);margin-bottom:16px;font-size:1.02rem}
+  .split .body p:last-child{margin-bottom:0}
+
+  /* Services list (horizontal cards) */
+  .services-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:44px;flex-wrap:wrap}
+  .services-head .note{color:var(--ink-soft);font-size:.92rem;max-width:300px}
+  .svc-card{
+    display:grid;grid-template-columns:84px 1fr auto;gap:26px;align-items:center;
+    padding:30px 32px;border:1px solid var(--line);border-radius:var(--radius);
+    background:#fff;margin-bottom:16px;cursor:pointer;text-align:left;width:100%;
+    transition:transform .28s,box-shadow .28s,border-color .28s;
+  }
+  .svc-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:transparent}
+  .svc-num{font-size:1.7rem;font-weight:700;color:var(--cobalt);opacity:.85;letter-spacing:-.02em}
+  .svc-text h3{font-size:1.18rem;font-weight:600;margin-bottom:7px}
+  .svc-text p{color:var(--ink-soft);font-size:.96rem;line-height:1.55}
+  .svc-go{color:var(--teal);font-weight:600;font-size:.9rem;white-space:nowrap;display:flex;align-items:center;gap:7px;transition:gap .25s}
+  .svc-card:hover .svc-go{gap:12px}
+
+  /* Wave + quiz teal section */
+  .wave{display:block;width:100%;height:80px;color:var(--teal)}
+  .quiz-band{background:var(--teal);color:#fff;padding:70px 0 84px;margin-top:-1px;text-align:center}
+  .quiz-band h2{font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:700;letter-spacing:-.01em}
+  .quiz-band p{font-size:clamp(1.3rem,2.4vw,1.6rem);opacity:1;margin:18px auto 32px;max-width:720px;font-weight:400;line-height:1.4}
+
+  /* Footer */
+  footer.ft{background:var(--ink);color:#fff;padding:54px 0}
+  .ft-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .ft-logo{font-weight:700;font-size:1.18rem;letter-spacing:.04em}
+  .ft-inner .tag{color:rgba(255,255,255,.62);font-size:.92rem}
+
+  /* ---------- Subpages (services / about / projects) ---------- */
+  .breadcrumb{font-size:.86rem;color:var(--ink-soft);padding-top:34px}
+  .breadcrumb a:hover{color:var(--cobalt)}
+  .breadcrumb .sep{margin:0 8px;opacity:.5}
+  .breadcrumb .here{color:var(--ink);font-weight:500}
+
+  .svc-detail{padding:34px 0 96px;max-width:760px}
+  .svc-detail h1{font-size:clamp(2.1rem,4vw,3rem);font-weight:700;letter-spacing:-.02em;margin:18px 0 22px}
+  .svc-detail .lead-p{font-size:1.18rem;color:var(--ink);font-weight:500;line-height:1.5;
+    border-left:3px solid var(--teal);padding-left:22px;margin-bottom:46px}
+  .svc-detail h2{font-size:1.3rem;font-weight:600;margin-bottom:16px;color:var(--cobalt)}
+  .svc-detail .full p{color:var(--ink-soft);font-size:1.04rem;margin-bottom:18px}
+  .svc-detail .cta-row{margin-top:40px}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start;padding-top:30px}
+  .about-card{
+    background:var(--bg-soft);border-radius:var(--radius);padding:38px 34px;border:1px solid var(--line);
+    position:sticky;top:96px;
+  }
+  .about-card .avatar{
+    width:78px;height:78px;border-radius:50%;margin-bottom:20px;
+    background:linear-gradient(135deg,var(--cobalt),var(--teal));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.7rem;font-weight:700;
+  }
+  .about-card .name{font-size:1.25rem;font-weight:600}
+  .about-card .role{color:var(--ink-soft);font-size:.92rem;margin-top:3px}
+  .about-body h1{font-size:clamp(2rem,4vw,2.9rem);font-weight:700;letter-spacing:-.02em;margin-bottom:24px}
+  .about-body p{color:var(--ink-soft);font-size:1.05rem;margin-bottom:20px}
+  .about-body p strong{color:var(--ink);font-weight:500}
+
+  /* CTA band (light) */
+  .cta-band{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:60px 0;text-align:center}
+  .cta-band h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700}
+  .cta-band p{color:var(--ink-soft);margin:12px 0 26px;font-size:1.08rem}
+
+  /* Projects */
+  .proj-intro{padding-top:30px;max-width:720px}
+  .proj-intro h1{font-size:clamp(2rem,4vw,2.9rem);font-weight:700;letter-spacing:-.02em;margin:14px 0 18px}
+  .proj-intro p{color:var(--ink-soft);font-size:1.08rem}
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:50px}
+  .proj{border:1px solid var(--line);border-radius:var(--radius);padding:30px 30px 32px;background:#fff;
+    transition:transform .28s,box-shadow .28s}
+  .proj:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+  .proj .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .proj .pill{font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    background:rgba(0,71,171,.08);color:var(--cobalt);padding:5px 11px;border-radius:999px}
+  .proj .country{font-size:.82rem;color:var(--ink-soft);font-weight:500}
+  .proj h3{font-size:1.2rem;font-weight:600;margin-bottom:12px}
+  .proj p{color:var(--ink-soft);font-size:.96rem;line-height:1.6}
+  .proj .num{font-size:.78rem;font-weight:600;color:var(--ink-soft);opacity:.6;letter-spacing:.1em;margin-bottom:14px}
+
+  /* Contact */
+  .contact-intro{padding-top:30px;max-width:640px}
+  .contact-intro h1{font-size:clamp(2rem,4vw,2.9rem);font-weight:700;letter-spacing:-.02em;margin:14px 0 16px}
+  .contact-intro p{color:var(--ink-soft);font-size:1.08rem}
+  .contact-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:48px;align-items:start;margin-top:48px;padding-bottom:90px}
+  .form-field{margin-bottom:20px}
+  .form-field label{display:block;font-size:.84rem;font-weight:600;margin-bottom:7px;color:var(--ink)}
+  .form-field label .opt{color:var(--ink-soft);font-weight:400}
+  .form-field input,.form-field textarea{
+    width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+    font-family:inherit;font-size:.98rem;color:var(--ink);background:#fff;transition:border-color .2s,box-shadow .2s;
+  }
+  .form-field input:focus,.form-field textarea:focus{
+    outline:none;border-color:var(--cobalt);box-shadow:0 0 0 3px rgba(0,71,171,.12);
+  }
+  .form-field textarea{resize:vertical;min-height:130px}
+  .contact-aside{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:32px 30px}
+  .contact-aside h3{font-size:1.05rem;font-weight:600;margin-bottom:18px}
+  .contact-aside .row{margin-bottom:18px}
+  .contact-aside .row:last-child{margin-bottom:0}
+  .contact-aside .lbl{font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+  .contact-aside a{color:var(--cobalt);font-weight:500;word-break:break-word}
+  .contact-aside a:hover{text-decoration:underline}
+  .contact-aside .quiz-nudge{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:.92rem;color:var(--ink-soft)}
+  .contact-aside .quiz-nudge a{display:inline-block;margin-top:10px}
+
+  /* Work carousel */
+  .work{padding:30px 0 86px}
+  .work .work-head{margin-bottom:30px;max-width:640px}
+  .work .work-head h2{font-size:clamp(1.5rem,2.8vw,2.1rem);font-weight:700;letter-spacing:-.01em}
+  .work .work-head p{color:var(--ink-soft);margin-top:10px;font-size:1.02rem}
+  .carousel{position:relative}
+  .carousel-track{
+    display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:6px 2px 18px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  }
+  .carousel-track::-webkit-scrollbar{height:8px}
+  .carousel-track::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+  .slide{
+    flex:0 0 clamp(280px,42%,440px);scroll-snap-align:start;
+    border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;
+    box-shadow:var(--shadow);
+  }
+  .slide .ph{
+    aspect-ratio:16/10;background:var(--bg-soft);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:10px;color:var(--ink-soft);
+    border-bottom:1px solid var(--line);
+    background-image:linear-gradient(135deg,rgba(0,71,171,.05),rgba(26,122,107,.06));
+  }
+  .slide .ph svg{width:46px;height:46px;opacity:.55}
+  .slide .ph .ph-tag{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .slide .cap{padding:16px 18px}
+  .slide .cap h4{font-size:1rem;font-weight:600;margin-bottom:4px}
+  .slide .cap p{font-size:.88rem;color:var(--ink-soft);line-height:1.5}
+  .carousel-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+  .carousel-nav button{
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;
+    cursor:pointer;font-size:1.1rem;color:var(--ink);transition:background .2s,border-color .2s,transform .2s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .carousel-nav button:hover{background:var(--cobalt);color:#fff;border-color:var(--cobalt);transform:translateY(-2px)}
+
+  /* page transition */
+  .page{display:none;animation:fade .45s ease both}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:860px){
+    .nav-menu{
+      position:fixed;inset:70px 0 auto 0;background:#fff;flex-direction:column;
+      padding:24px;gap:18px;border-bottom:1px solid var(--line);
+      transform:translateY(-130%);transition:transform .3s;
+    }
+    .nav-menu.open{transform:translateY(0)}
+    .nav-toggle{display:block}
+    .split,.about-grid,.proj-grid,.contact-grid{grid-template-columns:1fr}
+    .slide{flex:0 0 82%}
+    .about-card{position:static}
+    .svc-card{grid-template-columns:54px 1fr;gap:16px}
+    .svc-go{grid-column:1 / -1;margin-top:6px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  }
+
+  /* =====================================================
+     QUIZ SECTION (#quiz) — scoped styles, ported from VEKTOR_PM_Quiz.html
+     ===================================================== */
+  #quiz .qz-wrap{max-width:920px;margin:0 auto;padding:0 24px}
+
+  #quiz .qz-nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 0;border-bottom:1px solid var(--line);
+  }
+  #quiz .qz-logo{font-weight:700;letter-spacing:.06em;font-size:1.05rem;color:var(--ink)}
+  #quiz .qz-logo span{color:var(--cobalt)}
+  #quiz .nav-tag{font-size:.78rem;color:var(--ink-soft);letter-spacing:.02em}
+
+  #quiz .progress-shell{padding:26px 0 0}
+  #quiz .progress-meta{display:flex;justify-content:space-between;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  #quiz .progress-track{height:4px;background:var(--line);border-radius:99px;overflow:hidden}
+  #quiz .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cobalt),var(--teal));border-radius:99px;transition:width .45s cubic-bezier(.22,1,.36,1)}
+
+  #quiz .qz-main{padding:48px 0 90px;min-height:60vh}
+  #quiz .screen{display:none;animation:qzfade .5s cubic-bezier(.22,1,.36,1)}
+  #quiz .screen.active{display:block}
+  @keyframes qzfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  #quiz .qz-eyebrow{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+  #quiz h1{font-size:2.15rem;font-weight:600;line-height:1.18;letter-spacing:-.01em;margin-bottom:16px}
+  #quiz .lead{font-size:1.05rem;color:var(--ink-soft);max-width:600px;margin-bottom:38px}
+
+  #quiz .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  #quiz .card{
+    text-align:left;background:var(--bg);border:1.5px solid var(--line);
+    border-radius:var(--radius);padding:26px 24px;cursor:pointer;
+    transition:border-color .25s,box-shadow .25s,transform .25s;
+    position:relative;font-family:inherit;
+  }
+  #quiz .card:hover{border-color:var(--cobalt);box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+  #quiz .card-num{font-size:.74rem;font-weight:600;letter-spacing:.1em;color:var(--cobalt);margin-bottom:14px}
+  #quiz .card h3{font-size:1.12rem;font-weight:600;margin-bottom:8px}
+  #quiz .card p{font-size:.9rem;color:var(--ink-soft);line-height:1.5}
+  #quiz .card-arrow{position:absolute;right:22px;bottom:22px;color:var(--cobalt);opacity:0;transform:translateX(-6px);transition:.25s}
+  #quiz .card:hover .card-arrow{opacity:1;transform:none}
+
+  #quiz .q-count{font-size:.8rem;color:var(--ink-soft);font-weight:500;margin-bottom:10px}
+  #quiz .q-text{font-size:1.5rem;font-weight:600;line-height:1.3;letter-spacing:-.01em;margin-bottom:30px;max-width:680px}
+  #quiz .options{display:flex;flex-direction:column;gap:12px}
+  #quiz .opt{
+    display:flex;align-items:flex-start;gap:14px;text-align:left;
+    background:var(--bg);border:1.5px solid var(--line);border-radius:12px;
+    padding:18px 20px;cursor:pointer;font-family:inherit;font-size:.97rem;
+    color:var(--ink);transition:border-color .2s,background .2s,transform .15s;line-height:1.45;
+  }
+  #quiz .opt:hover{border-color:var(--cobalt);background:var(--bg-soft)}
+  #quiz .opt:active{transform:scale(.995)}
+  #quiz .opt-dot{
+    flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);
+    margin-top:2px;transition:.2s;position:relative;
+  }
+  #quiz .opt:hover .opt-dot{border-color:var(--cobalt)}
+  #quiz .opt.sel .opt-dot{border-color:var(--cobalt);background:var(--cobalt)}
+  #quiz .opt.sel{border-color:var(--cobalt);background:var(--bg-soft)}
+
+  #quiz .controls{display:flex;justify-content:space-between;align-items:center;margin-top:36px}
+  #quiz .qz-btn{
+    font-family:inherit;font-weight:600;font-size:.92rem;letter-spacing:.02em;
+    border:none;border-radius:99px;padding:14px 30px;cursor:pointer;transition:.2s;
+    display:inline-block;text-decoration:none;
+  }
+  #quiz .btn-primary{background:var(--cobalt);color:#fff}
+  #quiz .btn-primary:hover{background:var(--cobalt-dark)}
+  #quiz .btn-primary:disabled{background:var(--line);color:#a9b3bf;cursor:not-allowed}
+  #quiz .btn-ghost{background:none;color:var(--ink-soft);padding:14px 8px}
+  #quiz .btn-ghost:hover{color:var(--ink)}
+  #quiz .btn-ghost.hidden{visibility:hidden}
+
+  #quiz .form-wrap{max-width:560px}
+  #quiz .field{margin-bottom:20px}
+  #quiz .field label{display:block;font-size:.82rem;font-weight:500;margin-bottom:7px;color:var(--ink)}
+  #quiz .field input,#quiz .field textarea{
+    width:100%;font-family:inherit;font-size:.95rem;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:10px;padding:13px 15px;transition:border-color .2s;background:var(--bg);
+  }
+  #quiz .field input:focus,#quiz .field textarea:focus{outline:none;border-color:var(--cobalt)}
+  #quiz .field textarea{resize:vertical;min-height:90px}
+  #quiz .form-note{font-size:.82rem;color:var(--ink-soft);margin-top:6px}
+
+  #quiz .confirm{background:var(--teal);color:#fff;border-radius:var(--radius);padding:44px 40px;text-align:center}
+  #quiz .confirm h2{font-size:1.7rem;font-weight:600;margin-bottom:12px}
+  #quiz .confirm p{opacity:.92;max-width:440px;margin:0 auto;font-size:1rem}
+
+  #quiz .dash-top{display:grid;grid-template-columns:300px 1fr;gap:22px;margin-bottom:22px}
+  #quiz .score-card{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;text-align:center}
+  #quiz .score-ring{position:relative;width:150px;height:150px;margin:0 auto 18px}
+  #quiz .ring-svg{width:150px;height:150px;transform:rotate(-90deg)}
+  #quiz .ring-bg{fill:none;stroke:var(--line);stroke-width:9}
+  #quiz .ring-fg{fill:none;stroke:url(#g);stroke-width:9;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1)}
+  #quiz .score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.3rem;font-weight:700;color:var(--ink)}
+  #quiz .score-num small{font-size:.9rem;font-weight:500;color:var(--ink-soft);margin-left:2px;align-self:flex-end;margin-bottom:14px}
+  #quiz .score-label{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  #quiz .score-level{font-size:1.35rem;font-weight:600;margin:6px 0 12px;color:var(--cobalt)}
+  #quiz .score-desc{font-size:.88rem;color:var(--ink-soft);line-height:1.55}
+
+  #quiz .radar-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;display:flex;flex-direction:column}
+  #quiz .radar-title{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  #quiz .radar-svg{width:100%;height:auto;flex:1;margin-top:4px}
+  #quiz .radar-grid{fill:none;stroke:var(--line);stroke-width:1}
+  #quiz .radar-axis{stroke:var(--line);stroke-width:1}
+  #quiz .radar-shape{fill:rgba(0,71,171,.13);stroke:var(--cobalt);stroke-width:2;stroke-linejoin:round}
+  #quiz .radar-dot{fill:var(--cobalt)}
+  #quiz .radar-label{font-size:11px;font-weight:500;fill:var(--ink);font-family:'Poppins',sans-serif}
+  #quiz .radar-val{font-size:10px;font-weight:600;fill:var(--ink-soft);font-family:'Poppins',sans-serif}
+
+  #quiz .growth-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px 16px;margin-bottom:22px}
+  #quiz .growth-title{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:20px}
+  #quiz .growth-item{display:flex;gap:16px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+  #quiz .growth-item:last-child{border-bottom:none;margin-bottom:8px}
+  #quiz .growth-mark{flex:none;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:#fff;background:var(--cobalt)}
+  #quiz .growth-body{flex:1}
+  #quiz .growth-dim{font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  #quiz .growth-tag{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+  #quiz .growth-line{font-size:.93rem;line-height:1.6;color:var(--ink-soft)}
+
+  #quiz .locked{position:relative}
+  #quiz .blur-soft{filter:blur(6px);opacity:.85;user-select:none;pointer-events:none}
+  #quiz .blur-strong{filter:blur(7px);opacity:.8;user-select:none;pointer-events:none}
+  #quiz .lock-badge{
+    position:absolute;top:12px;right:12px;z-index:3;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.68rem;font-weight:600;letter-spacing:.04em;
+    color:var(--cobalt);background:#fff;border:1px solid var(--line);
+    border-radius:99px;padding:5px 11px;box-shadow:var(--shadow);
+  }
+  #quiz .lock-badge svg{width:12px;height:12px}
+  #quiz .growth-item.locked .growth-line,
+  #quiz .growth-item.locked .growth-dim,
+  #quiz .growth-item.locked .growth-mark{filter:blur(5px);opacity:.8;user-select:none}
+  #quiz .growth-item.locked{position:relative}
+
+  #quiz .dash-cta{background:var(--teal);color:#fff;border-radius:var(--radius);padding:30px 34px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  #quiz .dash-cta p{font-size:.98rem;max-width:520px;opacity:.95}
+  #quiz .dash-cta .btn-primary{background:#fff;color:var(--teal);flex:none}
+  #quiz .dash-cta .btn-primary:hover{background:#eef6f4}
+
+  #quiz .qz-footer{border-top:1px solid var(--line);padding:24px 0;display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink-soft)}
+  #quiz .qz-footer span:first-child{font-weight:600;letter-spacing:.05em;color:var(--ink)}
+
+  @media(max-width:640px){
+    #quiz h1{font-size:1.7rem}
+    #quiz .q-text{font-size:1.25rem}
+    #quiz .cards{grid-template-columns:1fr}
+    #quiz .confirm{padding:34px 24px}
+    #quiz .qz-footer{flex-direction:column;gap:6px}
+    #quiz .dash-top{grid-template-columns:1fr}
+    #quiz .dash-cta{flex-direction:column;align-items:flex-start}
+    #quiz .growth-item{flex-direction:column;gap:10px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#home" data-nav><span class="mark"></span>VEKTOR PM</a>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="lang-dd" id="langDD">
+        <button class="lang-current" id="langCurrent" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+          <span data-lang-label>EN</span><span class="chev"></span>
+        </button>
+        <div class="lang-menu" role="menu">
+          <button class="lang-opt" data-lang-btn="en" role="menuitem">EN</button>
+          <button class="lang-opt" data-lang-btn="it" role="menuitem">IT</button>
+        </div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu" id="navToggle">☰</button>
+    </div>
+    <nav class="nav-menu" id="navMenu">
+      <a href="#services-top" data-nav data-i18n="nav.services">Services</a>
+      <a href="#projects" data-nav data-i18n="nav.projects">Reference Projects</a>
+      <a href="#about" data-nav data-i18n="nav.about">About</a>
+      <a href="#contact" data-nav data-i18n="nav.contact">Contact</a>
+      <a class="btn" href="#contact" data-nav data-i18n="nav.cta">Let's talk</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="home">
+
+  <div class="hero">
+    <canvas id="netCanvas"></canvas>
+    <div class="wrap hero-inner">
+      <p class="eyebrow" data-i18n="home.eyebrow">Independent Project Management Consulting</p>
+      <h1><span data-i18n="home.h1.line1">Your next project,</span><br><span class="accent" data-i18n="home.h1.accent">delivered.</span></h1>
+      <p class="kicker" data-i18n="home.kicker">Practical project management that brings structure, control, and visibility to the work that matters most.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#quiz" data-nav data-i18n="home.cta.primary">Find your starting point</a>
+        <a class="btn btn--ghost" href="#services-top" data-nav style="color:var(--ink);border-color:var(--line)" data-i18n="home.cta.secondary">See how I can help</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Split intro -->
+  <section class="block">
+    <div class="wrap split">
+      <p class="lead"><span data-i18n="intro.lead.pre">Most organizations don't lack resources, but </span><span class="hl" data-i18n="intro.lead.hl">proper structure, clearer governance, and better visibility.</span></p>
+      <div class="body">
+        <p data-i18n="intro.p1">The challenge is to create the structure and oversight needed to consistently deliver projects and support decision-making.</p>
+        <p data-i18n="intro.p2">I work with organizations to improve the way projects and processes are managed, helping teams deliver more effectively through practical project management, stronger control, and better visibility.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work carousel (placeholder slides — swap .ph blocks with <img> when you have the images) -->
+  <section class="work">
+    <div class="wrap">
+
+      <div class="carousel">
+        <div class="carousel-track" id="workTrack">
+
+          <figure class="slide">
+            <div class="ph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+              <span class="ph-tag">Status Report</span>
+            </div>
+            <figcaption class="cap"><h4 data-i18n="tool.title1">Project status report</h4><p data-i18n="tool.cap1">Replace this placeholder with an image of your report.</p></figcaption>
+          </figure>
+
+          <figure class="slide">
+            <div class="ph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="10" width="12" height="4" rx="1"/><rect x="3" y="17" width="15" height="4" rx="1"/></svg>
+              <span class="ph-tag">WBS</span>
+            </div>
+            <figcaption class="cap"><h4 data-i18n="tool.title2">Work breakdown structure</h4><p data-i18n="tool.cap2">Replace this placeholder with an image of your WBS.</p></figcaption>
+          </figure>
+
+          <figure class="slide">
+            <div class="ph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h8M4 9h12M4 13h6M4 17h10"/><rect x="3" y="3.5" width="18" height="17" rx="2"/></svg>
+              <span class="ph-tag">Gantt</span>
+            </div>
+            <figcaption class="cap"><h4 data-i18n="tool.title3">Gantt chart</h4><p data-i18n="tool.cap3">Replace this placeholder with an image of your schedule.</p></figcaption>
+          </figure>
+
+          <figure class="slide">
+            <div class="ph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 16l3-5 3 3 4-7"/></svg>
+              <span class="ph-tag">Reporting</span>
+            </div>
+            <figcaption class="cap"><h4 data-i18n="tool.title4">Performance dashboard</h4><p data-i18n="tool.cap4">Replace this placeholder with an image of your dashboard.</p></figcaption>
+          </figure>
+
+          <figure class="slide">
+            <div class="ph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="8.5" y="14" width="7" height="7" rx="1"/><path d="M6.5 10v2.5h11V10M12 12.5V14"/></svg>
+              <span class="ph-tag">Process Map</span>
+            </div>
+            <figcaption class="cap"><h4 data-i18n="tool.title5">Process map</h4><p data-i18n="tool.cap5">Replace this placeholder with an image of your map.</p></figcaption>
+          </figure>
+
+        </div>
+        <div class="carousel-nav">
+          <button type="button" id="workPrev" aria-label="Previous">‹</button>
+          <button type="button" id="workNext" aria-label="Next">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="block tight" id="services-top" style="background:var(--bg-soft)">
+    <div class="wrap">
+      <div class="services-head">
+        <div>
+          <p class="eyebrow" data-i18n="svc.eyebrow">Services</p>
+          <h2 class="section-title" data-i18n="svc.heading">How can I help you?</h2>
+        </div>
+      </div>
+
+      <button class="svc-card" data-nav data-target="svc1">
+        <span class="svc-num">01</span>
+        <span class="svc-text"><h3 data-i18n="svc1.title">Temporary Project Manager</h3>
+        <p data-i18n="svc1.card">When a project needs hands-on leadership, I step in and take ownership of delivery. I work alongside your team, keep things moving, and make sure the project is handed over cleanly when it's done.</p></span>
+        <span class="svc-go" data-i18n="svc.more">More →</span>
+      </button>
+
+      <button class="svc-card" data-nav data-target="svc2">
+        <span class="svc-num">02</span>
+        <span class="svc-text"><h3 data-i18n="svc2.title">PM Support</h3>
+        <p data-i18n="svc2.card">Every organization works differently. I work alongside your team, bringing a proven project structure and adapting it to your environment — leaving behind a way of working your team can continue to use.</p></span>
+        <span class="svc-go" data-i18n="svc.more">More →</span>
+      </button>
+
+      <button class="svc-card" data-nav data-target="svc3">
+        <span class="svc-num">03</span>
+        <span class="svc-text"><h3 data-i18n="svc3.title">PM Function Implementation</h3>
+        <p data-i18n="svc3.card">If projects are managed differently every time, consistency becomes difficult to achieve. I help establish processes, tools, and ways of working that bring consistency and clarity.</p></span>
+        <span class="svc-go" data-i18n="svc.more">More →</span>
+      </button>
+
+      <button class="svc-card" data-nav data-target="svc4">
+        <span class="svc-num">04</span>
+        <span class="svc-text"><h3 data-i18n="svc4.title">Process Mapping</h3>
+        <p data-i18n="svc4.card">Before improving a process, you need to understand how it actually works. I map the current state, identify bottlenecks, and highlight where change will have the biggest impact.</p></span>
+        <span class="svc-go" data-i18n="svc.more">More →</span>
+      </button>
+
+      <button class="svc-card" data-nav data-target="svc5">
+        <span class="svc-num">05</span>
+        <span class="svc-text"><h3 data-i18n="svc5.title">Project Intelligence Reporting</h3>
+        <p data-i18n="svc5.card">I turn project data into concise reports that give leaders a clear view of project performance. Progress, costs, and key actions in a format that supports faster, more informed decisions, with risks tracked in a separate log.</p></span>
+        <span class="svc-go" data-i18n="svc.more">More →</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Wave -->
+  <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,40 C240,80 480,0 720,32 C960,64 1200,16 1440,48 L1440,80 L0,80 Z"></path>
+  </svg>
+
+  <!-- Quiz band -->
+  <section class="quiz-band">
+    <div class="wrap">
+      <h2 data-i18n="band.heading">Your team is working hard.</h2>
+      <p data-i18n="band.subtitle">So why do projects still run late, cost more than planned, or end without a proper handover?</p>
+      <a class="btn btn--ghost" href="#quiz" data-nav data-i18n="band.cta">Find your starting point</a>
+    </div>
+  </section>
+
+</section><!-- /home -->
+
+<!-- ============ SERVICE TEMPLATE PAGES ============ -->
+
+<section class="page" id="svc1">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#services-top" data-nav data-i18n="bc.services">Services</a><span class="sep">›</span><span class="here" data-i18n="svc1.bc">Temporary Project Manager</span></p>
+    <div class="svc-detail">
+      <p class="eyebrow" data-i18n="svc1.eyebrow">Service 01</p>
+      <h1 data-i18n="svc1.h1">Temporary Project Manager</h1>
+      <p class="lead-p" data-i18n="svc1.lead">When a project needs hands-on leadership, I step in and take ownership of delivery. I work alongside your team, keep things moving, and make sure the project is handed over cleanly when it's done.</p>
+      <h2 data-i18n="shared.fits">When this service fits</h2>
+      <div class="full">
+        <p data-i18n="svc1.p1">This service fits organizations without a dedicated Project Manager facing a project larger or more complex than usual, where structure, progress monitoring, and control over timelines and costs become essential.</p>
+        <p data-i18n="svc1.p2">As the project's PM, I plan and schedule the activities, define the deliverables across every phase, follow up on progress, and build the reporting that gives governance the right information at the right time. I keep timelines and costs under control, flag risks before they become problems, and act as the single point of accountability with suppliers and internal teams from start to a clean handover. My involvement lasts only as long as the project, giving you the leadership and oversight to deliver successfully without creating a permanent role.</p>
+      </div>
+      <div class="cta-row"><a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="svc2">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#services-top" data-nav data-i18n="bc.services">Services</a><span class="sep">›</span><span class="here" data-i18n="svc2.bc">PM Support</span></p>
+    <div class="svc-detail">
+      <p class="eyebrow" data-i18n="svc2.eyebrow">Service 02</p>
+      <h1 data-i18n="svc2.h1">PM Support</h1>
+      <p class="lead-p" data-i18n="svc2.lead">Every organization works differently. I work alongside your team, bringing a proven project structure and adapting it to your environment. The goal is not just to deliver the project, but to leave behind a way of working your team can continue to use.</p>
+      <h2 data-i18n="shared.fits">When this service fits</h2>
+      <div class="full">
+        <p data-i18n="svc2.p1">This service is designed for teams that are already running projects and are looking to introduce more structure and visibility as their work becomes more complex. The work gets done, but planning and reporting tend to happen without a clear method behind them.</p>
+        <p data-i18n="svc2.p2">I join the project and work with your team. We build the schedule and plan the activities together, get the deliverables clear for each phase, and set up the follow-up and reporting that governance needs to stay informed. I keep an eye on timelines and costs as the project moves, raise risks early, and help manage the relationship with suppliers and the people involved. Along the way I hand the method over to your team, so they can keep running it on their own once I'm gone.</p>
+      </div>
+      <div class="cta-row"><a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="svc3">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#services-top" data-nav data-i18n="bc.services">Services</a><span class="sep">›</span><span class="here" data-i18n="svc3.bc">PM Function Implementation</span></p>
+    <div class="svc-detail">
+      <p class="eyebrow" data-i18n="svc3.eyebrow">Service 03</p>
+      <h1 data-i18n="svc3.h1">PM Function Implementation</h1>
+      <p class="lead-p" data-i18n="svc3.lead">If projects are managed differently every time, consistency becomes difficult to achieve. I help establish processes, tools, and ways of working that bring consistency and clarity.</p>
+      <h2 data-i18n="shared.fits">When this service fits</h2>
+      <div class="full">
+        <p data-i18n="svc3.p1">This is for companies that want to build a real way of managing projects, not for one project but for all of them. Usually it's a business that has grown fast and now runs every project its own way, with no shared method to fall back on.</p>
+        <p data-i18n="svc3.p2">I look at how you run projects today and help create a more consistent and scalable way of working. I define the steps a project goes through from start to close, set up the templates and tools your people will actually use, and decide how projects get approved, tracked, and reported. Then I work with your teams to get them using it for real, not just on paper. Unlike the other services, here I'm not running a project with you on, making sure it holds once I step back.</p>
+      </div>
+      <div class="cta-row"><a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="svc4">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#services-top" data-nav data-i18n="bc.services">Services</a><span class="sep">›</span><span class="here" data-i18n="svc4.bc">Process Mapping</span></p>
+    <div class="svc-detail">
+      <p class="eyebrow" data-i18n="svc4.eyebrow">Service 04</p>
+      <h1 data-i18n="svc4.h1">Process Mapping</h1>
+      <p class="lead-p" data-i18n="svc4.lead">Before improving a process, you need to understand how it actually works. I map the current state, identify bottlenecks, and highlight where change will have the biggest impact.</p>
+      <h2 data-i18n="shared.fits">When this service fits</h2>
+      <div class="full">
+        <p data-i18n="svc4.p1">This is useful when work feels slower or messier than it should, but no one can quite point to where the problem is. It happens a lot in companies that are growing quickly, where the way things get done never really kept up with the business.</p>
+        <p data-i18n="svc4.p2">I sit down with the people who actually do the work and follow a process step by step, the way it really happens and not the way it's supposed to on paper. I map where workflows pass from one person to the next, where they get stuck, and where the same work gets done twice. What you get back is a clear picture of the current state, with the bottlenecks marked and a short list of where to start fixing things. From there, deciding what to improve becomes a lot easier.</p>
+      </div>
+      <div class="cta-row"><a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="svc5">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#services-top" data-nav data-i18n="bc.services">Services</a><span class="sep">›</span><span class="here" data-i18n="svc5.bc">Project Intelligence Reporting</span></p>
+    <div class="svc-detail">
+      <p class="eyebrow" data-i18n="svc5.eyebrow">Service 05</p>
+      <h1 data-i18n="svc5.h1">Project Intelligence Reporting</h1>
+      <p class="lead-p" data-i18n="svc5.lead">I turn project data into concise reports that give leaders a clear view of project performance. Progress, costs, and key actions are presented in a format that supports faster, more informed decision-making, with risks tracked in a separate log alongside.</p>
+      <h2 data-i18n="shared.fits">When this service fits</h2>
+      <div class="full">
+        <p data-i18n="svc5.p1">A lot of companies sit on plenty of project data but still can't get a straight answer on how things are actually going. The numbers are there, just scattered across files and tools, and pulling them together every time takes too long.</p>
+        <p data-i18n="svc5.p2">I take the data you already have and turn it into a report you can rely on. As a first step, we clarify together which business aspects and performance indicators matter most for your decisions, so we have a clear picture of what the end result needs to show. From there, I build a recurring business intelligence report around them: project progress by phase, time and cost tracking, resource utilization, KPIs, risk matrix and whatever else you need. Everything you need to know about the project, always up to date, in a format your leadership can read for fast and confident decision making.</p>
+      </div>
+      <div class="cta-row"><a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="about">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#home" data-nav data-i18n="about.bc.home">Home</a><span class="sep">›</span><span class="here" data-i18n="about.bc.here">About me</span></p>
+    <div class="about-grid">
+      <aside class="about-card">
+        <div class="avatar">A</div>
+        <div class="name">Andrea</div>
+        <div class="role" data-i18n="about.role">Project Management Consultant</div>
+      </aside>
+      <div class="about-body">
+        <h1 data-i18n="about.h1">About me</h1>
+        <p data-i18n="about.p1">Most organizations have the team, the skills, and the resources to deliver. What&#x2019;s often missing is someone who owns the project end to end, keeping everyone aligned, knowing exactly where activities and resources stands.</p>
+        <p data-i18n="about.p2">That&#x2019;s the mission of VEKTOR PM: bring clarity to how projects are run, with the structure, governance, and visibility to keep them under control, so projects move forward without data getting lost across tools or anyone having to chase down what&#x2019;s actually going on.</p>
+        <p data-i18n="about.p3"><strong>Hi, I&#x2019;m Andrea.</strong> I'am an Industrial Engineer and over the years I&#x2019;ve managed as a Project Manager more than 15 complex international projects across Europe, Asia, North America and Mexico, with budgets ranging from &euro;10 to &euro;70 million and timelines running over several years. My background spans heavy steel plant construction, industrial machinery, and scientific equipment, mostly on brownfield sites where schedules are tight and every solution has to work around keeping the client&#x2019;s operations running. That&#x2019;s the kind of setting that has shaped how I work: when a project starts slipping, I get into the detail, rethink how the pieces fit together, and step in directly where it matters, whether that means reorganizing the work across teams or going straight to the source to keep things on track. That hands-on experience is what shaped the way VEKTOR PM works today: bringing structure, control, and visibility into what matters most, so teams can make better decisions and deliver more effectively.</p>
+      </div>
+    </div>
+  </div>
+  <div class="cta-band" style="margin-top:80px">
+    <div class="wrap">
+      <h2 data-i18n="about.close.h">Have a project coming up?</h2>
+      <p data-i18n="about.close.p">Let's talk through where things are getting stuck.</p>
+      <a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REFERENCE PROJECTS ============ -->
+<section class="page" id="projects">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#home" data-nav data-i18n="proj.bc.home">Home</a><span class="sep">›</span><span class="here" data-i18n="proj.bc.here">Reference Projects</span></p>
+    <div class="proj-intro">
+      <h1 data-i18n="proj.h1">Selected projects</h1>
+      <p data-i18n="proj.intro">A selection of projects I've led across heavy industry and scientific equipment, from large-scale steel installations to setting up project management practices from the ground up.</p>
+    </div>
+
+    <div class="proj-grid">
+      <article class="proj">
+        <div class="num">PROJECT 01 - NDA</div>
+        <div class="meta"><span class="pill">Steel manufacturing</span><span class="country">Canada</span></div>
+        <h3 data-i18n="proj1.title">Electric Arc Furnace</h3>
+        <p data-i18n="proj1.desc">I managed the engineering, construction, and commissioning of a meltshop plant consisting in two large EAF units for one of Canada's major steel producers. Beyond the technical scope, the challenge was managing the integration into a plant that never stopped running — sequencing the work carefully and keeping a constant line of communication with the operations team to avoid interference with ongoing production.</p>
+      </article>
+
+      <article class="proj">
+        <div class="num">PROJECT 02 - NDA</div>
+        <div class="meta"><span class="pill">Special steel</span><span class="country">Mexico</span></div>
+        <h3 data-i18n="proj2.title">Meltshop and CCM</h3>
+        <p data-i18n="proj2.desc"> I managed the full delivery cycle of a steelmaking plant and Continuous Casting Machine (CCM) for a Mexican steel producer, from design and manufacturing oversight through to international logistics, construction, and integration into the existing melt shop. The scale of the project, combined with a geographically dispersed supplier network and the constraints of a live production environment, made coordination across engineering, procurement, logistics and site activities a key part of the role.</p>
+      </article>
+
+      <article class="proj">
+        <div class="num">PROJECT 03 - DALBEN SpA</div>
+        <div class="meta"><span class="pill">Scientific equipment</span><span class="country">International</span></div>
+        <h3 data-i18n="proj3.title">Astronomical Telescope Production Program</h3>
+        <p data-i18n="proj3.desc">I was brought in to set up the project management structure for a program involving the design and production of a series of astronomical telescopes. The work focused on establishing tracking, reporting, and follow-up practices rather than managing the technical content directly. The main challenge was introducing enough structure to give leadership reliable visibility, without disrupting the way the technical team already worked.</p>
+      </article>
+
+      <article class="proj">
+        <div class="num">PROJECT 04 - NDA</div>
+        <div class="meta"><span class="pill">Stainless steel</span><span class="country">Italy</span></div>
+        <h3 data-i18n="proj4.title">AOD Converter System</h3>
+        <p data-i18n="proj4.desc">I followed the development and production of an AOD converter for an Italian producer of stainless and special steels, through to integration with the existing plant. The scope covered coordination between the engineering team, the manufacturer, and the client's operations — managing the handover in a way that minimized disruption to an already running facility.</p>
+      </article>
+
+      <article class="proj" style="grid-column:1 / -1">
+        <div class="num">PROJECT 05 — CASE STUDY</div>
+        <div class="meta"><span class="pill">Case Study — Plastics industry</span><span class="country">Plastics industry</span></div>
+        <h3 data-i18n="proj5.title">PM Case Study — Plastics industry machine</h3>
+        <p data-i18n="proj5.desc">This is a self-developed case study built around a hypothetical design and construction project for a machine in the plastics sector. I used it to develop and document a complete PM framework from scratch — covering scheduling, planning, phase documentation, follow-up routines, and reporting. The goal was to have a concrete, end-to-end example that illustrates how I structure a project and what a full set of PM deliverables looks like in practice.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="cta-band" style="margin-top:80px">
+    <div class="wrap">
+      <h2 data-i18n="proj.close.h">Working on something similar?</h2>
+      <p data-i18n="proj.close.p">Let's talk about how I can help with your project.</p>
+      <a class="btn" href="#contact" data-nav data-i18n="shared.cta">Let's talk</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="page" id="contact">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="#home" data-nav data-i18n="contact.bc.home">Home</a><span class="sep">›</span><span class="here" data-i18n="contact.bc.here">Contact</span></p>
+    <div class="contact-intro">
+          <h1 data-i18n="contact.h1">Let's talk about your project</h1>
+      <p data-i18n="contact.intro">Tell me a bit about what you're working on, whether it's a project, a process, or a challenge that would benefit from a clearer approach. I read every message personally and will get back to you.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-form">
+        <div class="form-field">
+          <label for="c-name" data-i18n="contact.name.l">Name</label>
+          <input type="text" id="c-name" placeholder="Your name" data-i18n-ph="contact.name.ph">
+        </div>
+        <div class="form-field">
+          <label for="c-email" data-i18n="contact.email.l">Email</label>
+          <input type="email" id="c-email" placeholder="you@company.com" data-i18n-ph="contact.email.ph">
+        </div>
+        <div class="form-field">
+          <label for="c-company" data-i18n="contact.company.l">Company (optional)</label>
+          <input type="text" id="c-company" placeholder="Company name" data-i18n-ph="contact.company.ph">
+        </div>
+        <div class="form-field">
+          <label for="c-message" data-i18n="contact.msg.l">What can I help you with?</label>
+          <textarea id="c-message" placeholder="Describe your project, your situation, or your question." data-i18n-ph="contact.msg.ph"></textarea>
+        </div>
+        <button class="btn" id="contactSend" type="button" data-i18n="contact.send">Send message</button>
+      </div>
+
+      <aside class="contact-aside">
+        <h3 data-i18n="contact.aside.h">Reach me directly</h3>
+        <div class="row">
+          <div class="lbl" data-i18n="contact.aside.email">Email</div>
+          <a href="mailto:hello@vektorpm.com">hello@vektorpm.com</a>
+        </div>
+        <div class="row">
+          <div class="lbl">LinkedIn</div>
+          <a href="#" target="_blank" rel="noopener">linkedin.com/in/your-profile</a>
+        </div>
+        <div class="quiz-nudge">
+          Not sure where to start? A short assessment can help pinpoint where your project is getting stuck.</p>
+          <a class="btn btn--teal" href="#quiz" data-nav>Find your starting point</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     QUIZ PAGE — ported from VEKTOR_PM_Quiz.html
+     Reachable via #quiz. Self-contained inside #quiz scope.
+     ============================================================ -->
+<section class="page" id="quiz">
+  <div class="qz-wrap">
+    <div class="qz-nav">
+      <div class="qz-logo">VEKTOR<span> PM</span></div>
+      <div class="nav-tag" data-i18n="qz.navtag">Project Management Assessment</div>
+      <div class="qz-lang"><div class="lang-dd" id="langDDQuiz"><button class="lang-current" aria-haspopup="true" aria-expanded="false" aria-label="Language"><span data-lang-label>EN</span><span class="chev"></span></button><div class="lang-menu" role="menu"><button class="lang-opt" data-lang-btn="en" role="menuitem">EN</button><button class="lang-opt" data-lang-btn="it" role="menuitem">IT</button></div></div></div>
+    </div>
+  </div>
+
+  <div class="qz-wrap progress-shell" id="progressShell" style="display:none">
+    <div class="progress-meta">
+      <span id="pLabel">Question 1</span>
+      <span id="pPct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+  </div>
+
+  <div class="qz-main">
+  <div class="qz-wrap">
+
+    <!-- INTENT -->
+    <section class="screen active" id="s-intent">
+      <h1 data-i18n="qz.intent.h">Which one is your challenge?</h1>
+      <div class="cards">
+        <button class="card" data-intent="A">
+          <div class="card-num">01</div>
+          <h3 data-i18n="qz.intent.c1.h">A standalone project</h3>
+          <p data-i18n="qz.intent.c1.p">One project needs to be delivered, and there's no dedicated person to own it.</p>
+          <span class="card-arrow">→</span>
+        </button>
+        <button class="card" data-intent="B">
+          <div class="card-num">02</div>
+          <h3 data-i18n="qz.intent.c2.h">Growing without a PM function</h3>
+          <p data-i18n="qz.intent.c2.p">The business is growing fast, and it's the right moment to give project management a real structure.</p>
+          <span class="card-arrow">→</span>
+        </button>
+        <button class="card" data-intent="B">
+          <div class="card-num">03</div>
+          <h3 data-i18n="qz.intent.c3.h">Supporting the PM function</h3>
+          <p data-i18n="qz.intent.c3.p">A project management function already exists, and now it needs to grow and take on a solid structure.</p>
+          <span class="card-arrow">→</span>
+        </button>
+        <button class="card" data-intent="B">
+          <div class="card-num">04</div>
+          <h3 data-i18n="qz.intent.c4.h">Optimizing the PM function</h3>
+          <p data-i18n="qz.intent.c4.p">The structure is already in place; it just needs to be refined and optimized.</p>
+          <span class="card-arrow">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- QUESTION -->
+    <section class="screen" id="s-question">
+      <div class="q-count" id="qCount"></div>
+      <div class="q-text" id="qText"></div>
+      <div class="options" id="qOptions"></div>
+      <div class="controls">
+        <button class="qz-btn btn-ghost" id="backBtn" data-i18n="qz.btn.back">← Back</button>
+        <button class="qz-btn btn-primary" id="nextBtn" disabled data-i18n="qz.btn.continue">Continue</button>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="screen" id="s-dash">
+      <div class="qz-eyebrow" data-i18n="qz.dash.eyebrow">Your assessment</div>
+      <h1 data-i18n="qz.dash.h">Here's where your projects stand today.</h1>
+      <p class="lead" data-i18n="qz.dash.lead">Built from your answers, this snapshot shows where you're already strong and where further development could have the greatest impact.</p>
+
+      <div class="dash-top">
+        <div class="score-card locked">
+          <span class="lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span data-i18n="qz.dash.locked">Locked</span></span>
+          <div class="score-ring blur-strong">
+            <svg viewBox="0 0 120 120" class="ring-svg">
+              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0047AB"></stop>
+                <stop offset="100%" stop-color="#1A7A6B"></stop>
+              </linearGradient></defs>
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="score-num"><span id="scoreVal">0</span><small>/100</small></div>
+          </div>
+          <div class="score-label" data-i18n="qz.dash.scorelbl">Project Readiness Score</div>
+          <div class="score-level blur-soft" id="scoreLevel">—</div>
+          <p class="score-desc blur-soft" id="scoreDesc"></p>
+        </div>
+
+        <div class="radar-card locked">
+          <span class="lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span data-i18n="qz.dash.locked">Locked</span></span>
+          <div class="radar-title" data-i18n="qz.dash.radartitle">Readiness across the board</div>
+          <svg viewBox="0 0 440 300" class="radar-svg blur-soft" id="radarSvg"></svg>
+        </div>
+      </div>
+
+      <div class="growth-card">
+        <div class="growth-title" data-i18n="qz.dash.growthtitle">Where there's the most room to grow</div>
+        <div id="growthList"></div>
+      </div>
+
+      <div class="dash-cta">
+        <p data-i18n="qz.dash.ctatext">This is the view at a glance. Leave your details on the next step and I'll send you the full read — what the pattern suggests, and where I'd start.</p>
+        <button class="qz-btn btn-primary" id="toFormBtn" data-i18n="qz.dash.ctabtn">Get the full read →</button>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section class="screen" id="s-form">
+      <div class="qz-eyebrow" data-i18n="qz.form.eyebrow">Assessment complete</div>
+      <h1 data-i18n="qz.form.h">Now let's turn your answers into next steps.</h1>
+      <p class="lead" data-i18n="qz.form.lead">Your answers already point to where your next steps should be. Leave your contact details below and I'll come back to you with a clear read on what they're telling me, and we'll take it from there together.</p>
+      <div class="form-wrap">
+        <div class="field">
+          <label for="fName" data-i18n="qz.form.name.l">Name</label>
+          <input type="text" id="fName" placeholder="Your full name" data-i18n-ph="qz.form.name.ph">
+        </div>
+        <div class="field">
+          <label for="fEmail" data-i18n="qz.form.email.l">Email</label>
+          <input type="email" id="fEmail" placeholder="you@company.com" data-i18n-ph="qz.form.email.ph">
+        </div>
+        <div class="field">
+          <label for="fCompany" data-i18n="qz.form.company.l">Company (optional)</label>
+          <input type="text" id="fCompany" placeholder="Company name" data-i18n-ph="qz.form.company.ph">
+        </div>
+        <div class="field">
+          <label for="fMsg" data-i18n="qz.form.msg.l">Anything you'd like to add? (optional)</label>
+          <textarea id="fMsg" placeholder="A line or two about your project or situation" data-i18n-ph="qz.form.msg.ph"></textarea>
+        </div>
+        <div class="controls">
+          <button class="qz-btn btn-ghost" id="formBack" data-i18n="qz.btn.back">← Back</button>
+          <button class="qz-btn btn-primary" id="submitBtn" data-i18n="qz.btn.send">Send</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIRM -->
+    <section class="screen" id="s-done">
+      <div class="confirm">
+        <h2 data-i18n="qz.done.h">Thank you — your message is on its way.</h2>
+        <p data-i18n="qz.done.p">I've received your assessment, you will receive the reply with my suggestions by email shortly.</p>
+      </div>
+    </section>
+
+  </div>
+  </div>
+
+  <div class="qz-wrap">
+    <div class="qz-footer">
+      <span>VEKTOR PM</span>
+      <span data-i18n="qz.footer.tag">Independent Project Management Consulting</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="ft">
+  <div class="wrap ft-inner">
+    <div class="ft-logo">VEKTOR PM</div>
+    <div class="tag" data-i18n="footer.tag">Independent Project Management Consulting</div>
+  </div>
+</footer>
+
+<script>
+/* ===== injected i18n engine ===== */
+/* ============================================================
+   LANGUAGE / I18N ENGINE
+   Static-site strings keyed by data-i18n attribute.
+   Texts taken verbatim from VEKTOR_PM_Site_Testi_EN-IT.docx
+   and VEKTOR_PM_Quiz_Testi_EN-IT.docx.
+   ============================================================ */
+const I18N = {
+  /* ---- NAV ---- */
+  "nav.services":      {en:"Services", it:"Servizi"},
+  "nav.projects":      {en:"Reference Projects", it:"Progetti di riferimento"},
+  "nav.about":         {en:"About", it:"Chi sono"},
+  "nav.contact":       {en:"Contact", it:"Contatti"},
+  "nav.cta":           {en:"Let's talk", it:"Parliamo"},
+
+  /* ---- HOME / HERO ---- */
+  "home.eyebrow":      {en:"Independent Project Management Consulting", it:"Consulenza indipendente di Project Management"},
+  "home.h1.line1":     {en:"Your next project,", it:"Il tuo prossimo progetto,"},
+  "home.h1.accent":    {en:"delivered.", it:"realizzato."},
+  "home.kicker":       {en:"Practical project management that brings structure, control, and visibility to the work that matters most.", it:"Project management concreto, che porta struttura, controllo e visibilit\u00e0 sul lavoro che conta di pi\u00f9."},
+  "home.cta.primary":  {en:"Find your starting point", it:"Trova il tuo punto di partenza"},
+  "home.cta.secondary":{en:"See how I can help", it:"Vediamo come posso aiutarti"},
+
+  /* ---- HOME / INTRO ---- */
+  "intro.lead.pre":    {en:"Most organizations don't lack resources, but ", it:"Alla maggior parte delle organizzazioni non mancano le risorse, ma "},
+  "intro.lead.hl":     {en:"proper structure, clearer governance, and better visibility.", it:"una struttura adeguata, una governance pi\u00f9 chiara e una migliore visibilit\u00e0."},
+  "intro.heading":     {en:"Most organizations don't lack resources, but proper structure, clearer governance, and better visibility.", it:"Alla maggior parte delle organizzazioni non mancano le risorse, ma una struttura adeguata, una governance pi\u00f9 chiara e una migliore visibilit\u00e0."},
+  "intro.p1":          {en:"The challenge is to create the structure and oversight needed to consistently deliver projects and support decision-making.", it:"La sfida \u00e8 creare la struttura e la supervisione necessarie a realizzare i progetti con continuit\u00e0 e a sostenere le decisioni."},
+  "intro.p2":          {en:"I work with organizations to improve the way projects and processes are managed, helping teams deliver more effectively through practical project management, stronger control, and better visibility.", it:"Affianco le organizzazioni per migliorare il modo in cui progetti e processi vengono gestiti, aiutando i team a realizzare in modo pi\u00f9 efficace attraverso un project management concreto, un controllo pi\u00f9 solido e una migliore visibilit\u00e0."},
+
+  /* ---- HOME / TOOL SCREENSHOTS ---- */
+  "tool.title1":       {en:"Project status report", it:"Report sullo stato del progetto"},
+  "tool.cap1":         {en:"Replace this placeholder with an image of your report.", it:"Sostituisci questo segnaposto con un'immagine del tuo report."},
+  "tool.title2":       {en:"Work breakdown structure", it:"Work Breakdown Structure"},
+  "tool.cap2":         {en:"Replace this placeholder with an image of your WBS.", it:"Sostituisci questo segnaposto con un'immagine della tua WBS."},
+  "tool.title3":       {en:"Gantt chart", it:"Diagramma di Gantt"},
+  "tool.cap3":         {en:"Replace this placeholder with an image of your schedule.", it:"Sostituisci questo segnaposto con un'immagine del tuo cronoprogramma."},
+  "tool.title4":       {en:"Performance dashboard", it:"Dashboard delle performance"},
+  "tool.cap4":         {en:"Replace this placeholder with an image of your dashboard.", it:"Sostituisci questo segnaposto con un'immagine della tua dashboard."},
+  "tool.title5":       {en:"Process map", it:"Mappa di processo"},
+  "tool.cap5":         {en:"Replace this placeholder with an image of your map.", it:"Sostituisci questo segnaposto con un'immagine della tua mappa."},
+
+  /* ---- HOME / SERVICES LIST ---- */
+  "svc.eyebrow":       {en:"Services", it:"Servizi"},
+  "svc.heading":       {en:"How can I help you?", it:"Come posso aiutare?"},
+  "svc1.title":        {en:"Temporary Project Manager", it:"Temporary Project Manager"},
+  "svc1.card":         {en:"When a project needs hands-on leadership, I step in and take ownership of delivery. I work alongside your team, keep things moving, and make sure the project is handed over cleanly when it's done.", it:"Quando un progetto ha bisogno di una guida operativa, intervengo assumendo la responsabilit\u00e0 della consegna. Affianco il team, mantengo il ritmo e garantisco un passaggio di consegne pulito alla chiusura."},
+  "svc2.title":        {en:"PM Support", it:"PM Support"},
+  "svc2.card":         {en:"Every organization works differently. I work alongside your team, bringing a proven project structure and adapting it to your environment \u2014 leaving behind a way of working your team can continue to use.", it:"Ogni organizzazione lavora a modo suo. Affianco il team portando una struttura di progetto collaudata adattandola al contesto, dando forma ad un metodo di lavoro che il team pu\u00f2 continuare a utilizzare."},
+  "svc3.title":        {en:"PM Function Implementation", it:"PM Function Implementation"},
+  "svc3.card":         {en:"If projects are managed differently every time, consistency becomes difficult to achieve. I help establish processes, tools, and ways of working that bring consistency and clarity.", it:"Se ogni progetto viene gestito in modo diverso, diventa difficile ottenere coerenza. Aiuto a definire processi, strumenti e modi di lavorare che portano coerenza e chiarezza."},
+  "svc4.title":        {en:"Process Mapping", it:"Process Mapping"},
+  "svc4.card":         {en:"Before improving a process, you need to understand how it actually works. I map the current state, identify bottlenecks, and highlight where change will have the biggest impact.", it:"Prima di migliorare un processo serve capire come funziona davvero. Mappo lo stato attuale, individuo i colli di bottiglia ed evidenzio dove il cambiamento avr\u00e0 l'impatto maggiore."},
+  "svc5.title":        {en:"Project Intelligence Reporting", it:"Project Intelligence Reporting"},
+  "svc5.card":         {en:"I turn project data into concise reports that give leaders a clear view of project performance. Progress, costs, and key actions in a format that supports faster, more informed decisions, with risks tracked in a separate log.", it:"Trasformo i dati di progetto in report sintetici che offrono ai vertici una visione chiara delle performance. Avanzamento, costi e azioni chiave in un formato che supporta decisioni pi\u00f9 rapide e informate, con i rischi tracciati in un registro separato."},
+  "svc.more":          {en:"More \u2192", it:"Scopri \u2192"},
+
+  /* ---- HOME / QUIZ BAND ---- */
+  "band.heading":      {en:"Your team is working hard.", it:"Il team lavora sodo."},
+  "band.subtitle":     {en:"So why do projects still run late, cost more than planned, or end without a proper handover?", it:"Allora perch\u00e9 i progetti continuano a essere in ritardo, a costare pi\u00f9 del previsto o a chiudersi senza un vero passaggio di consegne?"},
+  "band.cta":          {en:"Find your starting point", it:"Trova il tuo punto di partenza"},
+
+  /* ---- SHARED ---- */
+  "shared.fits":       {en:"When this service fits", it:"Quando questo servizio \u00e8 adatto"},
+  "shared.cta":        {en:"Let's talk", it:"Parliamo"},
+  "bc.services":       {en:"Services", it:"Servizi"},
+
+  /* ---- SERVICE PAGE 1 ---- */
+  "svc1.bc":           {en:"Temporary Project Manager", it:"Temporary Project Manager"},
+  "svc1.eyebrow":      {en:"Service 01", it:"Servizio 01"},
+  "svc1.h1":           {en:"Temporary Project Manager", it:"Temporary Project Manager"},
+  "svc1.lead":         {en:"When a project needs hands-on leadership, I step in and take ownership of delivery. I work alongside your team, keep things moving, and make sure the project is handed over cleanly when it's done.", it:"Quando un progetto ha bisogno di una guida operativa, intervengo assumendo la responsabilit\u00e0 della consegna. Affianco il team, mantengo il ritmo e garantisco un passaggio di consegne pulito alla chiusura."},
+  "svc1.p1":           {en:"This service fits organizations without a Project Manager function facing a project larger or more complex than usual, where structure, progress monitoring, and control over timelines and costs become essential.", it:"Questo servizio \u00e8 adatto alle organizzazioni prive di una funzione di Project Manager che affrontano un progetto pi\u00f9 grande o pi\u00f9 complesso del solito, dove struttura, monitoraggio dell'avanzamento e controllo di tempi e costi diventano essenziali."},
+  "svc1.p2":           {en:"As the project's PM, I plan and schedule the activities, define the deliverables across every phase, follow up on progress, and build the reporting that gives governance the right information at the right time. I keep timelines and costs under control, flag risks before they become problems, and act as the single point of accountability with suppliers and internal teams from start to a clean handover. My involvement lasts only as long as the project, giving you the leadership and oversight to deliver successfully without creating a permanent role.", it:"Come PM del progetto, pianifico e programmo le attivit\u00e0, definisco i deliverable di ogni fase, seguo l'avanzamento e costruisco il reporting che fornisce alla governance le informazioni giuste al momento giusto. Mantengo tempi e costi sotto controllo, segnalo i rischi prima che diventino problemi e agisco come unico punto di responsabilit\u00e0 verso fornitori e team interni, dall'avvio fino a un passaggio di consegne pulito. Il coinvolgimento dura quanto il progetto, offrendo la guida e la supervisione necessarie a portarlo a termine con successo senza creare un ruolo permanente."},
+
+  /* ---- SERVICE PAGE 2 ---- */
+  "svc2.bc":           {en:"PM Support", it:"PM Support"},
+  "svc2.eyebrow":      {en:"Service 02", it:"Servizio 02"},
+  "svc2.h1":           {en:"PM Support", it:"PM Support"},
+  "svc2.lead":         {en:"Every organization works differently. I work alongside your team, bringing a proven project structure and adapting it to your environment. The goal is not just to deliver the project, but to leave behind a way of working your team can continue to use.", it:"Ogni organizzazione lavora a modo suo. Affianco il team portando una struttura di progetto collaudata e adattandola al contesto. L'obiettivo non \u00e8 solo realizzare il progetto, ma lasciare un metodo di lavoro che il team possa continuare a usare."},
+  "svc2.p1":           {en:"This service is designed for teams that are already running projects and are looking to introduce more structure and visibility as their work becomes more complex. The work gets done, but planning and reporting tend to happen without a clear method behind them.", it:"Questo servizio \u00e8 pensato per i team che gi\u00e0 gestiscono progetti e vogliono introdurre pi\u00f9 struttura e visibilit\u00e0 man mano che il lavoro si fa pi\u00f9 complesso. Il lavoro viene portato a termine, ma pianificazione e reporting tendono ad avvenire senza un metodo chiaro alle spalle."},
+  "svc2.p2":           {en:"I join the project and work with your team. We build the schedule and plan the activities together, get the deliverables clear for each phase, and set up the follow-up and reporting that governance needs to stay informed. I keep an eye on timelines and costs as the project moves, raise risks early, and help manage the relationship with suppliers and the people involved. Along the way I hand the method over to your team, so they can keep running it on their own once I'm gone.", it:"Entro nel progetto e lavoro con il team. Costruiamo insieme lo schedule e pianifichiamo le attivit\u00e0, definiamo con chiarezza i deliverable di ogni fase e impostiamo il follow-up e il reporting di cui la governance ha bisogno per restare informata. Tengo d'occhio tempi e costi durante l'avanzamento, segnalo i rischi per tempo e aiuto a gestire il rapporto con i fornitori e le persone coinvolte. Lungo il percorso trasferisco il metodo al team, cos\u00ec da poterlo portare avanti in autonomia una volta concluso il mio intervento."},
+
+  /* ---- SERVICE PAGE 3 ---- */
+  "svc3.bc":           {en:"PM Function Implementation", it:"PM Function Implementation"},
+  "svc3.eyebrow":      {en:"Service 03", it:"Servizio 03"},
+  "svc3.h1":           {en:"PM Function Implementation", it:"PM Function Implementation"},
+  "svc3.lead":         {en:"If projects are managed differently every time, consistency becomes difficult to achieve. I help establish processes, tools, and ways of working that bring consistency and clarity.", it:"Se ogni progetto viene gestito in modo diverso, diventa difficile ottenere coerenza. Aiuto a definire processi, strumenti e modi di lavorare che portano coerenza e chiarezza."},
+  "svc3.p1":           {en:"This is for companies that want to build a real way of managing projects, not for one project but for all of them. Usually it's a business that has grown fast and now runs every project its own way, with no shared method to fall back on.", it:"\u00c8 rivolto alle aziende che vogliono costruire un vero metodo di gestione dei progetti, non per un singolo progetto ma per tutti. Di solito si tratta di realt\u00e0 cresciute in fretta, che oggi gestiscono ogni progetto a modo proprio, senza un metodo condiviso a cui fare riferimento."},
+  "svc3.p2":           {en:"I look at how you run projects today and help create a more consistent and scalable way of working. I define the steps a project goes through from start to close, set up the templates and tools your people will actually use, and decide how projects get approved, tracked, and reported. Then I work with your teams to get them using it for real, not just on paper. Unlike the other services, here I'm not running a project with you on, but I build the structure together with you making sure it holds once I step back.", it:"Analizzo come vengono gestiti i progetti oggi e aiuto a creare un modo di lavorare pi\u00f9 coerente e scalabile. Definisco le fasi che un progetto attraversa dall'avvio alla chiusura, predispongo i template e gli strumenti che le persone useranno e stabilisco come i progetti vengono approvati, monitorati e rendicontati. Poi lavoro con i team perch\u00e9 lo adottino concretamente, non solo sulla carta. A differenza degli altri servizi, qui non gestisco un progetto specifico, ma construisco la struttura insieme al team facendo in modo che il metodo regga una volta concluso il mio intervento."},
+
+  /* ---- SERVICE PAGE 4 ---- */
+  "svc4.bc":           {en:"Process Mapping", it:"Process Mapping"},
+  "svc4.eyebrow":      {en:"Service 04", it:"Servizio 04"},
+  "svc4.h1":           {en:"Process Mapping", it:"Process Mapping"},
+  "svc4.lead":         {en:"Before improving a process, you need to understand how it actually works. I map the current state, identify bottlenecks, and highlight where change will have the biggest impact.", it:"Prima di migliorare un processo serve capire come funziona davvero. Mappo lo stato attuale, individuo i colli di bottiglia ed evidenzio dove il cambiamento avr\u00e0 l'impatto maggiore."},
+  "svc4.p1":           {en:"This is useful when work feels slower or messier than it should, but no one can quite point to where the problem is. It happens a lot in companies that are growing quickly, where the way things get done never really kept up with the business.", it:"\u00c8 utile quando il lavoro appare pi\u00f9 lento o pi\u00f9 disallineato di quanto dovrebbe, ma non si riesce ad indicare con precisione dove sia il problema. Accade spesso nelle aziende in rapida crescita, dove il metodo operativo non riesce talvolta a stare al passo con il business."},
+  "svc4.p2":           {en:"I sit down with the people who actually do the work and follow the process step by step, the way it really happens and not the way it's supposed to on paper. I map where workflows pass from one person to the next, where they get stuck, and where the same work gets done twice. What you get back is a clear picture of the current state, with the bottlenecks marked and a short list of where to start fixing things. From there, deciding what to improve becomes a lot easier.", it:"Mi siedo con le persone che svolgono concretamente il lavoro e seguo il processo passo dopo passo, per come avviene davvero e non per come dovrebbe essere sulla carta. Mappo dove i flussi passano da una persona all'altra, dove si bloccano e dove si nascondono ridondanze. Il risultato \u00e8 un quadro chiaro dello stato attuale, con i colli di bottiglia evidenziati e una breve lista di priorit\u00e0 su cui intervenire. Da l\u00ec, decidere cosa migliorare diventa molto pi\u00f9 semplice."},
+
+  /* ---- SERVICE PAGE 5 ---- */
+  "svc5.bc":           {en:"Project Intelligence Reporting", it:"Project Intelligence Reporting"},
+  "svc5.eyebrow":      {en:"Service 05", it:"Servizio 05"},
+  "svc5.h1":           {en:"Project Intelligence Reporting", it:"Project Intelligence Reporting"},
+  "svc5.lead":         {en:"I turn project data into concise reports that give leaders a clear view of project performance. Progress, costs, and key actions are presented in a format that supports faster, more informed decision-making, with risks tracked in a separate log alongside.", it:"Trasformo i dati di progetto in report sintetici che offrono ai vertici una visione chiara delle performance. Avanzamento, costi e azioni chiave sono presentati in un formato che supporta decisioni pi\u00f9 rapide e informate, con i rischi tracciati in un registro separato."},
+  "svc5.p1":           {en:"A lot of companies sit on plenty of project data but still can't get a straight answer on how things are actually going. The numbers are there, just scattered across files and tools, and pulling them together every time takes too long.", it:"Molte aziende dispongono di una grande quantit\u00e0 di dati di progetto ma non riescono comunque ad avere una risposta chiara su come stanno andando davvero le cose. I numeri ci sono, ma sono sparsi tra file e strumenti diversi, e raccoglierli ogni volta richiede troppo tempo."},
+  "svc5.p2":           {en:"I take the data you already have and turn it into a report you can rely on. As a first step, we clarify together which business aspects and performance indicators matter most for your decisions, so we have a clear picture of what the end result needs to show. From there, I build a recurring business intelligence report around them: project progress by phase, time and cost tracking, resource utilization, KPIs, risk matrix and whatever else you need. Everything you need to know about the project, always up to date, in a format your leadership can read for fast and confident decision making.", it:"Prendo i dati gi\u00e0 disponibili e li trasformo in un report affidabile. Come primo passo, chiariamo insieme quali aspetti di business e quali indicatori di performance contano di pi\u00f9 per le decisioni, cos\u00ec da avere un quadro chiaro di ci\u00f2 che il risultato finale deve mostrare. Da l\u00ec costruisco un report di business intelligence ricorrente: avanzamento del progetto per fase, monitoraggio di tempi e costi, utilizzo delle risorse, KPI, matrice dei rischi e tutto ci\u00f2 che serve. Tutto quello che occorre sapere sul progetto, sempre aggiornato, in un formato che i vertici possono leggere per prendere decisioni in modo rapido e sicuro."},
+
+  /* ---- ABOUT ---- */
+  "about.bc.home":     {en:"Home", it:"Home"},
+  "about.bc.here":     {en:"About me", it:"Chi sono"},
+  "about.role":        {en:"Project Management Consultant", it:"Project Management Consultant"},
+  "about.h1":          {en:"About me", it:"Chi sono"},
+  "about.p1":          {en:"Most organizations have the team, the skills, and the resources to deliver. What's often missing is someone who owns the project end to end, keeping everyone aligned, knowing exactly where activities and resources stands.", it:"La maggior parte delle organizzazioni dispone del team, delle competenze e delle risorse per realizzare i progetti. Ci\u00f2 che spesso manca \u00e8 qualcuno che ne assuma la responsabilit\u00e0 dall'inizio alla fine, mantenendo tutti allineati, sapendo con esattezza a che punto sono le attivit\u00e0 e le risorse impiegate."},
+  "about.p2":          {en:"That's the mission of VEKTOR PM: bring clarity to how projects are run, with the structure, governance, and visibility to keep them under control, so projects move forward without data getting lost across tools or anyone having to chase down what's actually going on.", it:"\u00c8 questa la missione di VEKTOR PM: portare chiarezza nel modo in cui i progetti vengono gestiti, con la struttura, la governance e la visibilit\u00e0 necessarie a tenerli sotto controllo, cos\u00ec che i progetti avanzino senza che i dati si perdano tra i diversi strumenti e senza che qualcuno debba rincorrere ci\u00f2 che sta realmente accadendo."},
+  "about.p3":          {en:"Hi, I'm Andrea. I'am an Industrial Engineer and over the years I've managed as a Project Manager more than 15 complex international projects across Europe, Asia, North America and Mexico, with budgets ranging from \u20ac10 to \u20ac70 million and timelines running over several years. My background spans heavy steel plant construction, industrial machinery, and scientific equipment, mostly on brownfield sites where schedules are tight and every solution has to work around keeping the client's operations running. That's the kind of setting that has shaped how I work: when a project starts slipping, I get into the detail, rethink how the pieces fit together, and step in directly where it matters, whether that means reorganizing the work across teams or going straight to the source to keep things on track. That hands-on experience is what shaped the way VEKTOR PM works today: bringing structure, control, and visibility into what matters most, so teams can make better decisions and deliver more effectively.", it:"Ciao, sono Andrea. Sono un ingegnere industriale e negli anni ho gestito come Project Manager pi\u00f9 di 15 progetti internazionali complessi tra Europa, Asia, Nord America e Messico, con budget compresi tra i 5 e i 70 milioni di euro e tempistiche distribuite su pi\u00f9 anni. La mia esperienza spazia dalla costruzione di impianti siderurgici pesanti ai macchinari industriali, fino alle apparecchiature scientifiche, per lo pi\u00f9 su siti brownfield, dove i tempi sono stretti e ogni soluzione deve tenere conto della necessit\u00e0 di mantenere operativa l'attivit\u00e0 del cliente. \u00c8 proprio questo tipo di contesto ad aver plasmato il mio modo di lavorare: quando un progetto inizia a slittare, entro nel dettaglio, ripenso a come incastrare le diverse parti e intervengo direttamente dove conta, che significhi riorganizzare il lavoro tra i team o andare direttamente alla fonte per rimettere le cose in carreggiata. \u00c8 questa esperienza sul campo ad aver definito il modo in cui VEKTOR PM lavora oggi: portare struttura, controllo e visibilit\u00e0 su ci\u00f2 che conta di pi\u00f9, cos\u00ec che i team possano prendere decisioni migliori e realizzare in modo pi\u00f9 efficace."},
+  "about.close.h":     {en:"Have a project coming up?", it:"Hai un progetto in arrivo?"},
+  "about.close.p":     {en:"Let's talk through where things are getting stuck.", it:"Parliamo e vediamo dove le cose si stanno bloccando."},
+
+  /* ---- REFERENCE PROJECTS ---- */
+  "proj.bc.home":      {en:"Home", it:"Home"},
+  "proj.bc.here":      {en:"Reference Projects", it:"Progetti di riferimento"},
+  "proj.h1":           {en:"Selected projects", it:"Progetti selezionati"},
+  "proj.intro":        {en:"A selection of projects I've led across heavy industry and scientific equipment, from large-scale steel installations to setting up project management practices from the ground up.", it:"Una selezione di progetti che ho gestito nell'industria pesante e nella strumentazione scientifica, dalle installazioni siderurgiche su larga scala alla creazione da zero di pratiche di project management."},
+  "proj1.title":       {en:"Electric Arc Furnace", it:"Forno elettrico ad arco"},
+  "proj1.desc":        {en:"I managed the engineering, construction, and commissioning of a meltshop plant consisting in two large EAF units for one of Canada's major steel producers. Beyond the technical scope, the challenge was managing the integration into a plant that never stopped running \u2014 sequencing the work carefully and keeping a constant line of communication with the operations team to avoid interference with ongoing production.", it:"Ho gestito come PM un progetto che prevedeva l'ingegneria, la costruzione e la messa in servizio di un'acciaieria composta da due grandi unit\u00e0 EAF per uno dei principali produttori di acciaio del Canada. Oltre all'aspetto tecnico, la sfida \u00e8 stata gestire l'integrazione in un impianto in operazione, sequenziando il lavoro con attenzione e mantenendo un contatto costante con il team operativo per evitare interferenze con la produzione in corso."},
+  "proj2.title":       {en:"Meltshop and CCM", it:"Acciaieria e CCM"},
+  "proj2.desc":        {en:"I managed the full delivery cycle of a steelmaking plant and Continuous Casting Machine (CCM) for a Mexican steel producer, from design and manufacturing oversight through to international logistics, construction, and integration into the existing melt shop. The scale of the project, combined with a geographically dispersed supplier network and the constraints of a live production environment, made coordination across engineering, procurement, logistics and site activities a key part of the role.", it:"Ho gestito l'intero ciclo di realizzazione di un'acciaieria e di una macchina di colata continua (CCM) per un produttore di acciaio messicano, dalla progettazione e produzione fino alla logistica internazionale, alla costruzione e all'integrazione nell'acciaieria esistente. La dimensione del progetto, unita a una rete di fornitori geograficamente dispersa e ai vincoli di un ambiente di produzione attivo, ha reso il coordinamento tra ingegneria, approvvigionamento, logistica e attivit\u00e0 di cantiere una parte centrale del ruolo."},
+  "proj3.title":       {en:"Astronomical Telescope Production Program", it:"Programma di produzione di telescopi astronomici"},
+  "proj3.desc":        {en:"I was brought in to set up the project management structure for a program involving the design and production of a series of astronomical telescopes. The work focused on establishing tracking, reporting, and follow-up practices rather than managing the technical content directly. The main challenge was introducing enough structure to give leadership reliable visibility, without disrupting the way the technical team already worked.", it:"Sono stato coinvolto per impostare la struttura di project management di un programma dedicato alla progettazione e produzione di una serie di telescopi astronomici. Il lavoro si \u00e8 concentrato sulla definizione di pratiche di tracciamento, reporting e follow-up, pi\u00f9 che sulla gestione diretta dei contenuti tecnici. La sfida principale \u00e8 stata introdurre struttura a sufficienza per offrire ai vertici una visibilit\u00e0 affidabile, senza alterare il modo di lavorare gi\u00e0 consolidato del team tecnico."},
+  "proj4.title":       {en:"AOD Converter System", it:"Sistema convertitore AOD"},
+  "proj4.desc":        {en:"I followed the development and production of an AOD converter for an Italian producer of stainless and special steels, through to integration with the existing plant. The scope covered coordination between the engineering team, the manufacturer, and the client's operations \u2014 managing the handover in a way that minimized disruption to an already running facility.", it:"Ho seguito lo sviluppo e la produzione di un convertitore AOD per un produttore italiano di acciai inossidabili e speciali, fino all'integrazione con l'impianto esistente. Il progetto comprendeva il coordinamento del team di ingegneria, la fornitura, e le spedizioni in modo che fossero alineate con le operations del cliente, gestendo il passaggio di consegne in modo da ridurre al minimo l'impatto su un impianto gi\u00e0 in funzione."},
+  "proj5.title":       {en:"PM Case Study \u2014 Plastics industry machine", it:"Caso di studio PM \u2014 Macchina per il settore plastico"},
+  "proj5.desc":        {en:"This is a self-developed case study built around a hypothetical design and construction project for a machine in the plastics sector. I used it to develop and document a complete PM framework from scratch \u2014 covering scheduling, planning, phase documentation, follow-up routines, and reporting. The goal was to have a concrete, end-to-end example that illustrates how I structure a project and what a full set of PM deliverables looks like in practice.", it:"Si tratta di un caso di studio sviluppato in proprio, costruito attorno a un ipotetico progetto di progettazione e fornitura di una macchina per il settore plastico. L'ho utilizzato per sviluppare e documentare da zero un framework di PM completo, che copre programmazione, pianificazione, documentazione e deliverables, routine di follow-up e reporting. L'obiettivo era disporre di un esempio concreto ed end-to-end che illustri come strutturo un progetto e che aspetto ha nella pratica un set completo di deliverable di PM."},
+  "proj.close.h":      {en:"Working on something similar?", it:"Stai lavorando a qualcosa di simile?"},
+  "proj.close.p":      {en:"Let's talk about how I can help with your project.", it:"Parliamo e vediamo come posso aiutare con il tuo progetto."},
+
+  /* ---- CONTACT ---- */
+  "contact.bc.home":   {en:"Home", it:"Home"},
+  "contact.bc.here":   {en:"Contact", it:"Contatti"},
+  "contact.h1":        {en:"Let's talk about your project", it:"Parliamo del tuo progetto"},
+  "contact.intro":     {en:"Tell me a bit about what you're working on, whether it's a project, a process, or a challenge that would benefit from a clearer approach. I read every message personally and will get back to you.", it:"Racconta brevemente di cosa ti stai occupando, che si tratti di un progetto, di un processo o di una sfida che trarrebbe beneficio da un approccio pi\u00f9 chiaro. Leggo personalmente ogni messaggio e ti risponder\u00f2."},
+  "contact.name.l":    {en:"Name", it:"Nome"},
+  "contact.name.ph":   {en:"Your name", it:"Il tuo nome"},
+  "contact.email.l":   {en:"Email", it:"Email"},
+  "contact.email.ph":  {en:"you@company.com", it:"tu@azienda.com"},
+  "contact.company.l": {en:"Company (optional)", it:"Azienda (facoltativo)"},
+  "contact.company.ph":{en:"Company name", it:"Nome dell'azienda"},
+  "contact.msg.l":     {en:"What can I help you with?", it:"Come posso aiutarti?"},
+  "contact.msg.ph":    {en:"Describe your project, your situation, or your question.", it:"Descrivi il tuo progetto, la tua situazione o la tua domanda."},
+  "contact.send":      {en:"Send message", it:"Invia messaggio"},
+  "contact.aside.h":   {en:"Reach me directly", it:"Contattami direttamente"},
+  "contact.aside.email":{en:"Email", it:"Email"},
+
+  /* ---- FOOTER ---- */
+  "footer.tag":        {en:"Independent Project Management Consulting", it:"Consulenza indipendente di Project Management"},
+
+  /* ---- QUIZ: shared chrome ---- */
+  "qz.navtag":         {en:"Project Management Assessment", it:"Assessment di Project Management"},
+  "qz.footer.tag":     {en:"Independent Project Management Consulting", it:"Consulenza indipendente di Project Management"},
+
+  /* ---- QUIZ: intent screen ---- */
+  "qz.intent.h":       {en:"Which one is your challenge?", it:"Qual \u00e8 la tua sfida?"},
+  "qz.intent.c1.h":    {en:"A standalone project", it:"Un progetto singolo"},
+  "qz.intent.c1.p":    {en:"One project needs to be delivered, and there's no dedicated person to own it.", it:"C'\u00e8 un progetto da portare a termine e non c'\u00e8 una persona dedicata che se ne occupi."},
+  "qz.intent.c2.h":    {en:"Growing without a PM function", it:"Crescere senza una funzione PM"},
+  "qz.intent.c2.p":    {en:"The business is growing fast, and it's the right moment to give project management a real structure.", it:"Il business cresce rapidamente ed \u00e8 il momento giusto per dare al project management una vera struttura."},
+  "qz.intent.c3.h":    {en:"Supporting the PM function", it:"Supportare la funzione PM"},
+  "qz.intent.c3.p":    {en:"A project management function already exists, and now it needs to grow and take on a solid structure.", it:"Una funzione di project management esiste gi\u00e0 e ora ha bisogno di crescere e dotarsi di una struttura solida."},
+  "qz.intent.c4.h":    {en:"Optimizing the PM function", it:"Ottimizzare la funzione PM"},
+  "qz.intent.c4.p":    {en:"The structure is already in place; it just needs to be refined and optimized.", it:"La struttura \u00e8 gi\u00e0 in essere; va solo affinata e ottimizzata."},
+
+  /* ---- QUIZ: dashboard chrome ---- */
+  "qz.dash.eyebrow":   {en:"Your assessment", it:"La tua valutazione"},
+  "qz.dash.h":         {en:"Here's where your projects stand today.", it:"Ecco a che punto sono oggi i tuoi progetti."},
+  "qz.dash.lead":      {en:"Built from your answers, this snapshot shows where you're already strong and where further development could have the greatest impact.", it:"Costruita a partire dalle tue risposte, questa istantanea mostra dove sei gi\u00e0 solido e dove un ulteriore sviluppo potrebbe avere l'impatto maggiore."},
+  "qz.dash.scorelbl":  {en:"Project Readiness Score", it:"Project Readiness Score"},
+  "qz.dash.radartitle":{en:"Readiness across the board", it:"Livello di Readiness complessivo"},
+  "qz.dash.growthtitle":{en:"Where there's the most room to grow", it:"Dove c'\u00e8 pi\u00f9 margine di crescita"},
+  "qz.dash.locked":    {en:"Locked", it:"Bloccato"},
+  "qz.dash.ctatext":   {en:"This is the view at a glance. Leave your details on the next step and I'll send you the full read \u2014 what the pattern suggests, and where I'd start.", it:"Questa \u00e8 la visione d'insieme. Lascia i tuoi dati nel passaggio successivo e ti invier\u00f2 la lettura completa: cosa suggerisce il quadro e da dove partirei."},
+  "qz.dash.ctabtn":    {en:"Get the full read \u2192", it:"Ottieni la lettura completa \u2192"},
+
+  /* ---- QUIZ: form ---- */
+  "qz.form.eyebrow":   {en:"Assessment complete", it:"Valutazione completata"},
+  "qz.form.h":         {en:"Now let's turn your answers into next steps.", it:"Ora trasformiamo le tue risposte in prossimi passi."},
+  "qz.form.lead":      {en:"Your answers already point to where your next steps should be. Leave your contact details below and I'll come back to you with a clear read on what they're telling me, and we'll take it from there together.", it:"Le tue risposte indicano gi\u00e0 dove dovrebbero portare i prossimi passi. Lascia qui sotto i tuoi contatti e ti ricontatter\u00f2 con una lettura chiara di ci\u00f2 che raccontano, e da l\u00ec proseguiremo insieme."},
+  "qz.form.name.l":    {en:"Name", it:"Nome"},
+  "qz.form.name.ph":   {en:"Your full name", it:"Il tuo nome e cognome"},
+  "qz.form.email.l":   {en:"Email", it:"Email"},
+  "qz.form.email.ph":  {en:"you@company.com", it:"tu@azienda.com"},
+  "qz.form.company.l": {en:"Company (optional)", it:"Azienda (facoltativo)"},
+  "qz.form.company.ph":{en:"Company name", it:"Nome dell'azienda"},
+  "qz.form.msg.l":     {en:"Anything you'd like to add? (optional)", it:"Vuoi aggiungere qualcosa? (facoltativo)"},
+  "qz.form.msg.ph":    {en:"A line or two about your project or situation", it:"Due righe sul tuo progetto o sulla tua situazione"},
+
+  /* ---- QUIZ: confirm + buttons ---- */
+  "qz.done.h":         {en:"Thank you \u2014 your message is on its way.", it:"Grazie \u2014 il tuo messaggio \u00e8 in viaggio."},
+  "qz.done.p":         {en:"I've received your assessment, you will receive the reply with my suggestions by email shortly.", it:"Ho ricevuto le tue risposte, riceverai a breve i risultati con i miei consigli via email."},
+  "qz.btn.back":       {en:"\u2190 Back", it:"\u2190 Indietro"},
+  "qz.btn.continue":   {en:"Continue", it:"Continua"},
+  "qz.btn.finish":     {en:"Finish", it:"Concludi"},
+  "qz.btn.send":       {en:"Send", it:"Invia"}
+};
+
+/* current language: detect from browser, default English for non-Italian */
+let LANG = (navigator.language || navigator.userLanguage || "en").toLowerCase().startsWith("it") ? "it" : "en";
+
+/* helper: pick localized value from a {en,it} object (or return string as-is) */
+function L(v){ return (v && typeof v === "object" && v.en !== undefined) ? (v[LANG] || v.en) : v; }
+
+/* apply all static-site strings tagged with data-i18n / data-i18n-ph */
+function applyStaticI18n(){
+  document.querySelectorAll("[data-i18n]").forEach(node=>{
+    const key = node.getAttribute("data-i18n");
+    if(I18N[key]) node.textContent = I18N[key][LANG] || I18N[key].en;
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(node=>{
+    const key = node.getAttribute("data-i18n-ph");
+    if(I18N[key]) node.setAttribute("placeholder", I18N[key][LANG] || I18N[key].en);
+  });
+  document.documentElement.lang = LANG;
+}
+
+/* set language, re-render everything language-dependent */
+function setLang(lang){
+  LANG = (lang === "it") ? "it" : "en";
+  applyStaticI18n();
+  // update dropdown trigger label(s)
+  document.querySelectorAll("[data-lang-label]").forEach(el=>{ el.textContent = LANG.toUpperCase(); });
+  // mark active option
+  document.querySelectorAll(".lang-opt[data-lang-btn]").forEach(b=>{
+    b.classList.toggle("active", b.getAttribute("data-lang-btn") === LANG);
+  });
+  // close any open dropdown
+  document.querySelectorAll(".lang-dd.open").forEach(dd=>dd.classList.remove("open"));
+  document.querySelectorAll(".lang-current[aria-expanded]").forEach(b=>b.setAttribute("aria-expanded","false"));
+  // if the quiz is mid-flow, re-render the live screen so it switches language too
+  if (typeof window.__quizRelang === "function") window.__quizRelang();
+}
+
+
+/* ---------- Hash-based page router ---------- */
+const pages = document.querySelectorAll('.page');
+const SERVICE_ANCHOR = 'services-top';
+
+function showPage(id, scrollToAnchor){
+  let targetPage = id;
+  // map the services anchor to the home page
+  if(id === SERVICE_ANCHOR) targetPage = 'home';
+  const exists = document.getElementById(targetPage);
+  if(!exists || !exists.classList.contains('page')) targetPage = 'home';
+
+  pages.forEach(p=>p.classList.toggle('active', p.id===targetPage));
+
+  // active nav state
+  document.querySelectorAll('.nav-menu a').forEach(a=>a.classList.remove('active'));
+
+  // scroll behavior
+  requestAnimationFrame(()=>{
+    if(scrollToAnchor){
+      const el = document.getElementById(scrollToAnchor);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    } else {
+      window.scrollTo({top:0,behavior:'auto'});
+    }
+  });
+  // close mobile menu
+  document.getElementById('navMenu').classList.remove('open');
+}
+
+function route(){
+  const hash = (location.hash || '#home').slice(1);
+  if(hash === SERVICE_ANCHOR){
+    showPage('home', SERVICE_ANCHOR);
+  } else {
+    showPage(hash, null);
+  }
+}
+
+/* intercept internal nav clicks */
+document.addEventListener('click', e=>{
+  const link = e.target.closest('[data-nav]');
+  if(!link) return;
+  const target = link.dataset.target;       // service cards
+  const href = link.getAttribute('href');
+  if(target){ e.preventDefault(); location.hash = target; }
+  else if(href && href.startsWith('#')){ e.preventDefault(); location.hash = href.slice(1); }
+});
+
+window.addEventListener('hashchange', route);
+window.addEventListener('load', route);
+
+/* ---------- Language dropdown wiring ---------- */
+// toggle a dropdown when its trigger is clicked
+document.querySelectorAll('.lang-dd .lang-current').forEach(trigger=>{
+  trigger.addEventListener('click', e=>{
+    e.stopPropagation();
+    const dd = trigger.closest('.lang-dd');
+    const willOpen = !dd.classList.contains('open');
+    // close all others first
+    document.querySelectorAll('.lang-dd.open').forEach(o=>{ o.classList.remove('open'); const t=o.querySelector('.lang-current'); if(t) t.setAttribute('aria-expanded','false'); });
+    dd.classList.toggle('open', willOpen);
+    trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  });
+});
+// pick a language
+document.querySelectorAll('.lang-opt[data-lang-btn]').forEach(btn=>{
+  btn.addEventListener('click', e=>{ e.stopPropagation(); setLang(btn.getAttribute('data-lang-btn')); });
+});
+// close on outside click or Escape
+document.addEventListener('click', ()=>{
+  document.querySelectorAll('.lang-dd.open').forEach(o=>{ o.classList.remove('open'); const t=o.querySelector('.lang-current'); if(t) t.setAttribute('aria-expanded','false'); });
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.querySelectorAll('.lang-dd.open').forEach(o=>{ o.classList.remove('open'); const t=o.querySelector('.lang-current'); if(t) t.setAttribute('aria-expanded','false'); }); } });
+/* apply detected language on first paint */
+setLang(LANG);
+
+/* mobile menu toggle */
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navMenu').classList.toggle('open');
+});
+
+/* ---------- Work carousel arrows ---------- */
+(function(){
+  const track = document.getElementById('workTrack');
+  if(!track) return;
+  const step = () => {
+    const slide = track.querySelector('.slide');
+    return slide ? slide.getBoundingClientRect().width + 20 : 320;
+  };
+  const prev = document.getElementById('workPrev');
+  const next = document.getElementById('workNext');
+  if(prev) prev.addEventListener('click', ()=> track.scrollBy({left:-step(),behavior:'smooth'}));
+  if(next) next.addEventListener('click', ()=> track.scrollBy({left:step(),behavior:'smooth'}));
+})();
+
+(function(){
+  const btn = document.getElementById('contactSend');
+  if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    const name = (document.getElementById('c-name').value || '').trim();
+    const email = (document.getElementById('c-email').value || '').trim();
+    const company = (document.getElementById('c-company').value || '').trim();
+    const msg = (document.getElementById('c-message').value || '').trim();
+    if(!name || !email || !msg){
+      alert(LANG==="it"?'Inserisci nome, email e un breve messaggio per essere ricontattato.':'Please add your name, email, and a short message so I can get back to you.');
+      return;
+    }
+    const it = (LANG==="it");
+    const subject = (it?'Richiesta progetto da ':'Project enquiry from ') + name + (company ? ' — ' + company : '');
+    const body =
+      (it?'Nome: ':'Name: ') + name + '\n' +
+      'Email: ' + email + '\n' +
+      (company ? (it?'Azienda: ':'Company: ') + company + '\n' : '') +
+      '\n' + msg;
+    window.location.href = 'mailto:hello@vektorpm.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+  });
+})();
+
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('netCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w,h,nodes=[],raf;
+  const COUNT = 46;
+
+  function resize(){
+    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+  function init(){
+    resize();
+    nodes = Array.from({length:COUNT},()=>({
+      x:Math.random()*w, y:Math.random()*h,
+      vx:(Math.random()-.5)*0.25*devicePixelRatio,
+      vy:(Math.random()-.5)*0.25*devicePixelRatio
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(let i=0;i<nodes.length;i++){
+      const n=nodes[i];
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>w) n.vx*=-1;
+      if(n.y<0||n.y>h) n.vy*=-1;
+      for(let j=i+1;j<nodes.length;j++){
+        const m=nodes[j];
+        const dx=n.x-m.x, dy=n.y-m.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        const max=140*devicePixelRatio;
+        if(dist<max){
+          ctx.strokeStyle='rgba(0,71,171,'+(0.16*(1-dist/max))+')';
+          ctx.lineWidth=devicePixelRatio;
+          ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.fillStyle='rgba(26,122,107,.55)';
+      ctx.beginPath();ctx.arc(n.x,n.y,2*devicePixelRatio,0,Math.PI*2);ctx.fill();
+    });
+    raf=requestAnimationFrame(draw);
+  }
+  init();
+  if(!reduce){ draw(); }
+  else {
+    // static frame
+    ctx.clearRect(0,0,w,h);
+    nodes.forEach(n=>{ctx.fillStyle='rgba(26,122,107,.4)';ctx.beginPath();ctx.arc(n.x,n.y,2*devicePixelRatio,0,Math.PI*2);ctx.fill();});
+  }
+  window.addEventListener('resize',()=>{cancelAnimationFrame(raf);init();if(!reduce)draw();});
+})();
+</script>
+
+<script>
+/* ============================================================
+   QUIZ LOGIC — ported from VEKTOR_PM_Quiz.html
+   Wrapped in an IIFE to isolate it from the site's globals.
+   ============================================================ */
+(function(){
+/* ============================================================
+   QUIZ DATA  — verbatim from VEKTOR_PM_Quiz.docx
+   Each option: { t: text, s: score object }
+   ============================================================ */
+
+const QUIZ_A = {
+  profiles:["P1","P2","P3"],
+  questions:[
+    { q:{en:"How is project management currently structured in your organisation?",
+         it:"Come \u00e8 attualmente strutturato il project management nella tua organizzazione?"},
+      a:[
+        {t:{en:"One person handles it alongside their primary role, without dedicated time.", it:"Una persona se ne occupa accanto al proprio ruolo principale, senza che esista una figura dedicata."}, s:{P1:2,P2:0,P3:0}},
+        {t:{en:"Basic tools and processes exist, but no formal ownership or governance.", it:"Esistono strumenti e processi di base, ma nessuna responsabilit\u00e0 formale n\u00e9 governance."}, s:{P1:1,P2:2,P3:0}},
+        {t:{en:"Internal capability exists, but the structure is needed to scale.", it:"Una figura interna esiste, ma serve la struttura per crescere."}, s:{P1:0,P2:0,P3:2}},
+        {t:{en:"No PM function is usually necessary for the company\u2019s business.", it:"Per il business dell'azienda di norma non \u00e8 necessaria una funzione PM."}, s:{P1:1,P2:0,P3:0}},
+      ]},
+    { q:{en:"Do you have a project that needs to be delivered within the next few months, but you don\u2019t have a dedicated internal resource to own it?",
+         it:"C'\u00e8 un progetto da consegnare nei prossimi mesi, ma manca una risorsa interna dedicata che se ne assuma la responsabilit\u00e0?"},
+      a:[
+        {t:{en:"Yes, but we lack the knowledge and capability to manage it properly.", it:"S\u00ec, ma mancano le conoscenze e le competenze per gestirlo adeguatamente."}, s:{P1:2,P2:1,P3:0}},
+        {t:{en:"Yes, but we have not yet identified who should lead it.", it:"S\u00ec, ma non \u00e8 ancora stato individuato chi debba guidarlo."}, s:{P1:0,P2:2,P3:0}},
+        {t:{en:"We have an upcoming project and want to structure it properly from the start.", it:"C'\u00e8 un progetto in arrivo e si vuole strutturarlo correttamente fin dall'inizio."}, s:{P1:0,P2:0,P3:2}},
+        {t:{en:"No, I\u2019m here for another reason", it:"No, sono qui per un altro motivo"}, s:{P1:0,P2:0,P3:0}, exclude:true},
+      ]},
+    { q:{en:"What is the business impact if this project is not delivered on time and within budget?",
+         it:"Qual \u00e8 l'impatto sul business se questo progetto non viene consegnato nei tempi e nel budget previsti?"},
+      a:[
+        {t:{en:"Direct impact on revenue or a key client relationship.", it:"Impatto diretto sui ricavi o su una relazione chiave con un cliente."}, s:{P1:2,P2:1,P3:0}},
+        {t:{en:"Delay of a strategic goal or growth initiative.", it:"Ritardo di un obiettivo strategico o di un'iniziativa di crescita."}, s:{P1:1,P2:2,P3:1}},
+        {t:{en:"Limited impact, but the cost in time and money remains significant.", it:"Impatto limitato, ma il costo in termini di tempo e denaro resta significativo."}, s:{P1:0,P2:1,P3:2}},
+        {t:{en:"None of the above", it:"Nessuna delle precedenti"}, s:{P1:0,P2:0,P3:0}},
+      ]},
+    { q:{en:"Beyond this project, is building internal PM capability part of your agenda?",
+         it:"Oltre a questo progetto, sviluppare una capacit\u00e0 PM interna fa parte dei tuoi obiettivi?"},
+      a:[
+        {t:{en:"The priority is to deliver this specific project.", it:"La priorit\u00e0 \u00e8 portare a termine questo specifico progetto."}, s:{P1:2,P2:1,P3:0}},
+        {t:{en:"Delivery and building internal capability are equally important.", it:"Realizzare il progetto e costruire una capacit\u00e0 interna hanno la stessa importanza."}, s:{P1:1,P2:2,P3:1}},
+        {t:{en:"An internal structure exists; we just need support for this project.", it:"Una struttura interna esiste; serve solo supporto per questo progetto."}, s:{P1:0,P2:1,P3:2}},
+        {t:{en:"Our core business requires no dedicated PM function.", it:"Il nostro core business non richiede una funzione PM dedicata."}, s:{P1:0,P2:0,P3:0}},
+      ]},
+  ]
+};
+
+const QUIZ_B = {
+  profiles:["PMF","PMS","MAP","PIR"],
+  questions:[
+    { q:{en:"What does your team do in the first week of a new project?",
+         it:"Cosa fa il team nella prima settimana di un nuovo progetto?"},
+      a:[
+        {t:{en:"Initialization is not precisely structured. No Internal KOM, no Project Charter, etc.", it:"L'avvio non \u00e8 strutturato con precisione. Nessun KOM interno, nessun Project Charter, ecc."}, s:{PMF:2,PMS:0,MAP:0,PIR:0}},
+        {t:{en:"Workstreams progress, but without a clearly defined execution framework.", it:"Le attivit\u00e0 procedono, ma senza un framework di esecuzione chiaramente definito."}, s:{PMF:1,PMS:1,MAP:0,PIR:0}},
+        {t:{en:"Kickoff without continuity. Early structure fades along the project phases.", it:"Kickoff senza continuit\u00e0. La struttura iniziale si perde nel corso delle fasi del progetto."}, s:{PMF:0,PMS:2,MAP:0,PIR:0}},
+        {t:{en:"Clear priorities, aligned stakeholders, and structured workflow from first to last day.", it:"Priorit\u00e0 chiare, stakeholder allineati e workflow strutturato dal primo all'ultimo giorno."}, s:{PMF:0,PMS:0,MAP:0,PIR:0}},
+      ]},
+    { q:{en:"Is there clear alignment on your project\u2019s objectives across the organization?",
+         it:"C'\u00e8 un chiaro allineamento sugli obiettivi del progetto in tutta l'organizzazione?"},
+      a:[
+        {t:{en:"Diverging priorities across stakeholders.", it:"Priorit\u00e0 divergenti tra gli stakeholder."}, s:{PMF:2,PMS:1,MAP:0,PIR:0}},
+        {t:{en:"Nominal alignment. Objectives exist, but ownership is weak.", it:"Allineamento solo formale. Gli obiettivi esistono, ma la responsabilit\u00e0 \u00e8 debole."}, s:{PMF:1,PMS:1,MAP:0,PIR:0}},
+        {t:{en:"Shifting focus. Direction changes depending on leadership.", it:"Focus mutevole. La direzione cambia a seconda della leadership."}, s:{PMF:1,PMS:2,MAP:0,PIR:0}},
+        {t:{en:"Intention without execution. Delivery diverges from strategy.", it:"Intenzione senza esecuzione. La realizzazione diverge dalla strategia."}, s:{PMF:1,PMS:1,MAP:1,PIR:0}},
+      ]},
+    { q:{en:"Reflect on a project that missed its strategic objectives. Which scenario feels most familiar?",
+         it:"Pensa a un progetto che ha mancato i suoi obiettivi strategici. Quale scenario ti \u00e8 pi\u00f9 familiare?"},
+      a:[
+        {t:{en:"Effort without direction, the team delivered but without a unified plan", it:"Impegno senza direzione: il team ha consegnato, ma senza un piano unitario."}, s:{PMF:2,PMS:0,MAP:1,PIR:0}},
+        {t:{en:"Limited follow-up, some misalignment went unnoticed until too late.", it:"Follow-up limitato: alcuni disallineamenti sono passati inosservati fino a quando era troppo tardi."}, s:{PMF:0,PMS:1,MAP:0,PIR:2}},
+        {t:{en:"Initial momentum, but priorities gradually diverged.", it:"Slancio iniziale, ma le priorit\u00e0 sono gradualmente divergute."}, s:{PMF:0,PMS:2,MAP:0,PIR:1}},
+        {t:{en:"Hidden inefficiencies, targets were met but at high cost.", it:"Inefficienze nascoste: gli obiettivi sono stati raggiunti, ma a costo elevato."}, s:{PMF:0,PMS:0,MAP:2,PIR:1}},
+      ]},
+    { q:{en:"How does your organisation handle critical issues mid-project?",
+         it:"Come gestisce l'organizzazione le criticit\u00e0 a met\u00e0 progetto?"},
+      a:[
+        {t:{en:"Ad hoc resolution. Problems are handled reactively but not systematically.", it:"Risoluzione ad hoc. I problemi vengono affrontati in modo reattivo e non sistematico."}, s:{PMF:2,PMS:0,MAP:1,PIR:0}},
+        {t:{en:"Costly responses. Most critical issues consume excessive time and resources.", it:"Risposte onerose. La maggior parte delle criticit\u00e0 consuma tempo e risorse in modo eccessivo."}, s:{PMF:0,PMS:0,MAP:2,PIR:1}},
+        {t:{en:"Senior-led decisions. Escalations rely on hierarchy.", it:"Decisioni guidate dal senior management. Le escalation si affidano alla gerarchia."}, s:{PMF:1,PMS:2,MAP:0,PIR:0}},
+        {t:{en:"Critical issues are always managed within time and cost budget.", it:"Le criticit\u00e0 vengono sempre gestite nel rispetto di tempi e budget."}, s:{PMF:0,PMS:0,MAP:0,PIR:0}},
+      ]},
+    { q:{en:"When did you last have a clear, real-time picture of all your active projects in one place?",
+         it:"Quand'\u00e8 stata l'ultima volta che hai avuto un quadro chiaro e in tempo reale di tutti i progetti attivi in un unico posto?"},
+      a:[
+        {t:{en:"No reporting, information remains fragmented across workstreams.", it:"Nessun reporting: le informazioni restano frammentate tra le diverse attivit\u00e0."}, s:{PMF:1,PMS:0,MAP:0,PIR:2}},
+        {t:{en:"Isolated knowledge, information depends on individuals and is not shared.", it:"Conoscenza isolata: le informazioni dipendono dalle persone e non vengono condivise."}, s:{PMF:0,PMS:0,MAP:0,PIR:2}},
+        {t:{en:"Reporting systems exist, but data are sometimes unreliable or late.", it:"Esistono sistemi di reporting, ma i dati sono talvolta inaffidabili o in ritardo."}, s:{PMF:0,PMS:0,MAP:0,PIR:2}},
+        {t:{en:"Reporting arrives in time with all necessary information.", it:"Il reporting arriva nei tempi con tutte le informazioni necessarie."}, s:{PMF:0,PMS:0,MAP:0,PIR:0}},
+      ]},
+    { q:{en:"How does your organization capture and apply lessons learned from past projects?",
+         it:"Come raccoglie e applica l'organizzazione le lezioni apprese dai progetti passati?"},
+      a:[
+        {t:{en:"No closure review, the same issues keep returning.", it:"Nessuna review di chiusura: gli stessi problemi continuano a ripresentarsi."}, s:{PMF:2,PMS:1,MAP:0,PIR:0}},
+        {t:{en:"Limited retrospectives at project close.", it:"Retrospettive limitate alla chiusura del progetto."}, s:{PMF:1,PMS:1,MAP:0,PIR:0}},
+        {t:{en:"Lessons learned are discussed, but lack effective adoption in execution.", it:"Le lezioni apprese vengono discusse, ma manca un'adozione efficace nell'esecuzione."}, s:{PMF:0,PMS:1,MAP:2,PIR:0}},
+        {t:{en:"Lessons learned are always analyzed and applied in the following projects.", it:"Le lezioni apprese vengono sempre analizzate e applicate nei progetti successivi."}, s:{PMF:0,PMS:0,MAP:0,PIR:0}},
+      ]},
+  ]
+};
+
+/* ============================================================
+   EMAIL TEMPLATES — verbatim from VEKTOR_PM_Quiz.docx
+   keyed by the result string returned by the scoring functions
+   ============================================================ */
+const SUBJECT={en:"Your project management assessment", it:"La tua valutazione di project management"};
+const SIGN={en:"\n\nBest regards\nAndrea", it:"\n\nCordiali saluti,\nAndrea"};
+
+const EMAILS={
+"Profile 1 — Urgent, high impact, no PM in place":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Based on your answers, you have a project that needs to move forward and no dedicated resource in place to own it — and the business impact of getting it wrong is significant. That combination tends to be where things get complicated fast, especially when the team is already stretched across other priorities.
+
+The Temporary Project Manager service is built for exactly this situation. I step in, take ownership of delivery, and work alongside your team for the duration of the project — managing the planning, the follow-up, the KPI control so that the project stays on track and is handed over cleanly at the end.
+
+I'd like to understand the specifics of your project before suggesting anything concrete. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Dalle tue risposte emerge un progetto che deve andare avanti senza una risorsa dedicata che se ne assuma la responsabilità, con un impatto sul business significativo in caso di errore. È proprio questa combinazione a far complicare le cose in fretta, soprattutto quando il team è già impegnato su altre priorità.
+
+Il servizio Temporary Project Manager nasce esattamente per questa situazione. Intervengo, assumo il controllo della consegna e affianco il team per tutta la durata del progetto, gestendo la pianificazione, il follow-up e il controllo dei KPI affinché il progetto resti in linea e venga consegnato rispettando tempi e modalità.
+
+Mi piacerebbe capire i dettagli del tuo progetto prima di proporre qualcosa di concreto. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Profile 2 — Upcoming project, no identified leader":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Your answers suggest that the project is coming together but the leadership piece isn't in place yet; you have some structure around it, but no one has been identified to own it end to end. That gap tends to become more visible once the project actually starts, which is exactly when it's hardest to fill.
+
+With the Temporary Project Manager service, I come in as the dedicated lead for the project working within the structure you already have, filling the ownership gap, and making sure the project has the direction and follow-through it needs from start to handover.
+
+I'd like to understand your project in more detail before suggesting anything specific. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Le tue risposte suggeriscono che il progetto sta prendendo forma, ma manca ancora la guida: c'è una certa struttura attorno, ma non è stato individuato chi se ne assuma la responsabilità dall'inizio alla fine. Questo vuoto tende a diventare più evidente quando il progetto parte davvero, ed è esattamente il momento in cui è più difficile colmarlo.
+
+Con il servizio Temporary Project Manager intervengo come guida dedicata del progetto, lavorando all'interno della struttura che già esiste, colmando il vuoto di responsabilità e assicurando al progetto la direzione e la continuità di cui ha bisogno, dall'avvio al passaggio di consegne.
+
+Mi piacerebbe approfondire il tuo progetto prima di proporre qualcosa di specifico. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Profile 3 — Proactive, internal capability exists":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Your answers suggest you're approaching this the right way, thinking about structure before the project starts rather than after things get complicated. You have some internal capability in place, and the goal is to make sure this specific project is set up and managed properly from day one.
+
+In this kind of situation, the Temporary Project Manager service works as a complement to what you already have. I bring the dedicated focus and project structure that's hard to maintain when the team is also running the day-to-day business, and I make sure the project is handed back cleanly at the end with everything documented and in order.
+
+I'd like to hear more about the project before suggesting anything specific. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Le tue risposte suggeriscono che stai affrontando questo progetto nel modo giusto, pensando alla struttura prima che il progetto inizi e non dopo che le cose si complicano. Disponi di una certa capacità interna e l'obiettivo è assicurarti che questo specifico progetto venga impostato e gestito correttamente fin dal primo giorno.
+
+In una situazione di questo tipo, il servizio Temporary Project Manager funziona come complemento a ciò che hai già. Porto il focus dedicato e la struttura di progetto difficili da mantenere quando il team sta gestendo anche l'operatività quotidiana, e mi assicuro che il progetto venga restituito in modo pulito alla fine, con tutto documentato e in ordine.
+
+Mi piacerebbe sapere di più sul progetto prima di proporre qualcosa di specifico. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"⚠ Not a fit — Temporary PM likely not relevant":
+{en:`(No automated email is sent for this outcome.)
+
+The prospect selected "No, I'm here for another reason" on the key qualifying question, which excludes them from the Temporary PM funnel. Review manually before any follow-up.`,
+ it:`(Per questo esito non viene inviata alcuna email automatica.)
+
+Il contatto ha selezionato "No, sono qui per un altro motivo" alla domanda chiave di qualificazione, il che lo esclude dal funnel del Temporary PM. Verificare manualmente prima di qualsiasi follow-up.`},
+"Bundle 1 — PM Function Implementation":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Based on your answers, it looks like your organisation is at a stage where a more structured approach to project management would make a real difference. It's a situation that tends to emerge naturally as companies grow and take on more complex work — and it's exactly the kind of thing that's worth addressing properly.
+
+The PM Function Implementation service is designed for this. Together, we look at how projects are currently governed and managed (the processes flow, the structure, the reporting..) and define the changes that will have the most practical impact. The goal is a framework that fits how your organisation actually operates and that your team can own to grow more efficiently.
+
+I'd like to understand your situation in more detail before suggesting anything specific. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Dalle tue risposte sembra che l'organizzazione sia a uno stadio in cui un approccio più strutturato al project management farebbe una differenza concreta. È una situazione che tende a emergere naturalmente quando le aziende crescono e affrontano lavori più complessi, ed è esattamente il genere di cosa che vale la pena affrontare come si deve.
+
+Il servizio PM Function Implementation è pensato per questo. Insieme analizziamo come i progetti vengono attualmente governati e gestiti (il flusso dei processi, la struttura, il reporting...) e definiamo i cambiamenti che avranno l'impatto pratico maggiore. L'obiettivo è un framework che rispecchi il modo in cui l'organizzazione opera davvero e che il team possa fare proprio per crescere in modo più efficiente.
+
+Mi piacerebbe approfondire la tua situazione prima di proporre qualcosa di specifico. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Bundle 2 — PM Function Implementation + PM Support":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Your answers suggest two areas that are worth looking at together: the overall PM structure and the level of support available to manage current projects. The two tend to be connected, and in my experience addressing them in parallel produces better results than tackling them separately.
+
+The approach I'd suggest works on both points at the same moment: we will build a more solid PM foundation while providing direct support to the team. In this way the active projects stay on track while the longer-term structure is build, with a framework that fits how your organisation actually operates.
+
+I'd like to understand the specifics before proposing anything concrete. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Le tue risposte indicano due ambiti che vale la pena affrontare insieme: la struttura PM complessiva e il livello di supporto disponibile per gestire i progetti in corso. I due aspetti tendono a essere collegati e, per mia esperienza, affrontarli in parallelo produce risultati migliori rispetto a trattarli separatamente.
+
+L'approccio che suggerirei agisce su entrambi i fronti nello stesso momento: costruiamo una base PM più solida fornendo al contempo supporto diretto al team. In questo modo i progetti attivi restano in linea mentre si costruisce la struttura di più lungo periodo, con un framework che rispecchia il modo in cui l'organizzazione opera davvero.
+
+Mi piacerebbe capire i dettagli prima di proporre qualcosa di concreto. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Bundle 3 — PM Function Implementation + Process Mapping":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Based on your answers, there are two aspects worth exploring together: how projects are currently managed, and how work flows through the organisation more broadly. The two are connected, and understanding both tends to lead to better decisions about where to focus first.
+
+The starting point I'd propose is mapping how things actually work today — processes, handoffs, decision points — before defining what needs to change. It gives the PM structure that follows a much stronger foundation, and in practice it makes the whole process faster and more targeted.
+
+I'd like to hear more about your situation before suggesting anything specific. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Dalle tue risposte emergono due aspetti che vale la pena esplorare insieme: come vengono gestiti oggi i progetti e come, più in generale, il lavoro fluisce attraverso l'organizzazione. I due aspetti sono collegati e comprenderli entrambi tende a portare a decisioni migliori su dove concentrarsi per primi.
+
+Il punto di partenza che proporrei è mappare come funzionano davvero le cose oggi — processi, passaggi di consegne, deliverables, punti decisionali — prima di definire cosa cambiare. Questo dà alla struttura PM che ne segue una base molto più solida e, nella pratica, rende l'intero processo più rapido e mirato.
+
+Mi piacerebbe sapere di più sulla tua situazione prima di proporre qualcosa di specifico. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Bundle 4 — PM Support":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Your answers suggest that a solid PM foundation is already in place — which is a good position to be in. Based on what comes through, giving the team additional support would help handle more demanding projects with greater confidence and control.
+
+This is a different kind of engagement from building a PM function from zero. The goal is to work alongside the existing workflow reinforcing it, not replacing it; this is about build the capacity to take on more complex work with the necessary structure to manage them.
+
+I'd like to hear more about your situation before suggesting anything specific. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Le tue risposte suggeriscono che una solida base PM è già presente, il che è una buona posizione di partenza. Da quanto emerge, dare al team un supporto aggiuntivo aiuterebbe ad affrontare progetti più impegnativi con maggiore sicurezza e controllo.
+
+È un tipo di intervento diverso dal costruire una funzione PM da zero. L'obiettivo è affiancare il flusso di lavoro esistente rafforzandolo, non sostituirlo: si tratta di costruire la capacità di affrontare lavori più complessi con la struttura necessaria a gestirli.
+
+Mi piacerebbe sapere di più sulla tua situazione prima di proporre qualcosa di specifico. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Bundle 5 — PM Support + Project Intelligence Reporting":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Based on your answers, two areas stand out as worth addressing together: the level of support available to the team on active projects, and the visibility leadership has into how those projects are performing. The two tend to reinforce each other, and improving both at once tends to produce the clearest results.
+
+I'd approach this on both fronts — strengthening the support structure around the PM function while building a reporting framework that gives leadership a consistent, reliable picture of what's happening across projects.
+
+Would a short call in the next few days work to talk through your current setup?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Dalle tue risposte spiccano due ambiti che vale la pena affrontare insieme: il livello di supporto disponibile per il team sui progetti attivi e la visibilità che i vertici hanno sulle performance di quei progetti. I due aspetti tendono a rafforzarsi a vicenda e migliorarli entrambi insieme tende a produrre i risultati più chiari.
+
+Lo affronterei su entrambi i fronti: rafforzando la struttura di supporto attorno alla funzione PM e costruendo al contempo un framework di reporting che offra ai vertici un quadro coerente e affidabile di ciò che accade nei progetti.
+
+Una breve call nei prossimi giorni può andare bene per fare il punto sulla tua situazione attuale?`+SIGN.it},
+"Bundle 6 — Process Mapping + Project Intelligence Reporting":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Your answers point to two areas that are worth looking at together: how work currently flows through the organisation, and how project performance is tracked and communicated to leadership. The two tend to be connected — and improving both at the same time tends to produce clearer, more durable results.
+
+The most effective starting point is usually to map the current state first — understanding how processes actually work before defining what needs to change. From there, putting in place a reporting structure becomes significantly more targeted and easier to maintain.
+
+I'd like to understand your situation before suggesting anything specific. Would a short call in the next few days work?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Le tue risposte indicano due ambiti che vale la pena considerare insieme: come il lavoro fluisce oggi attraverso l'organizzazione e come le performance dei progetti vengono monitorate e comunicate ai vertici. I due aspetti tendono a essere collegati, e migliorarli contemporaneamente tende a produrre risultati più chiari e duraturi.
+
+Il punto di partenza più efficace è di solito mappare prima lo stato attuale, capendo come funzionano davvero i processi prima di definire cosa cambiare. Da lì, mettere in piedi una struttura di reporting diventa molto più mirato e più semplice da mantenere.
+
+Mi piacerebbe capire la tua situazione prima di proporre qualcosa di specifico. Una breve call nei prossimi giorni può andare bene?`+SIGN.it},
+"Bundle 7 — Project Intelligence Reporting":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Based on your answers, the PM structure is broadly in place, which is a solid starting point. The area that stands out is reporting: translating the project data that already exists into the kind of clear, timely information that leadership can use to make confident decisions.
+
+This is a focused engagement that doesn't require changing the PM function itself. It's about building a reporting structure around what already exists — the right information, in the right format, at the right frequency.
+
+Would a short call in the next few days work to talk through your current setup?`+SIGN.en,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Dalle tue risposte la struttura PM risulta nel complesso presente, il che è un solido punto di partenza. L'ambito che spicca è il reporting: tradurre i dati di progetto già esistenti in informazioni chiare e tempestive che i vertici possano usare per decidere con sicurezza.
+
+È un intervento mirato che non richiede di modificare la funzione PM in sé. Si tratta di costruire una struttura di reporting attorno a ciò che già esiste: le informazioni giuste, nel formato giusto, con la giusta frequenza.
+
+Una breve call nei prossimi giorni può andare bene per fare il punto sulla tua situazione attuale?`+SIGN.it},
+"Bundle 8 — Full diagnostic, let's talk":
+{en:`Hi [Name],
+
+Thank you for completing the assessment.
+
+Your answers cover a range of areas — from how projects are structured and how the organisation aligns around them, to how performance is tracked and how experience feeds into future work. That kind of broad picture is best explored in a direct conversation rather than summarised in an email.
+
+Rather than recommending a specific service on the basis of the assessment alone, I'd suggest a diagnostic call — 30 minutes to go through what your answers flagged, share a straight view of what the pattern suggests, and work out together what makes sense to address first. No proposal, just a conversation.
+
+Would a short call in the next few days work?
+
+Andrea`,
+ it:`Ciao [Name],
+
+grazie per aver completato la valutazione.
+
+Le tue risposte toccano diversi ambiti: dal modo in cui i progetti sono strutturati e da come l'organizzazione si allinea attorno ad essi, fino a come vengono monitorate le performance e a come l'esperienza confluisce nei lavori futuri. Un quadro così ampio si esplora meglio in una conversazione diretta che riassunto in un'email.
+
+Invece di consigliare un servizio specifico solo sulla base della valutazione, suggerirei una call diagnostica: 30 minuti per ripercorrere ciò che le tue risposte hanno evidenziato, condividere una visione schietta di ciò che il quadro suggerisce e capire insieme da dove ha senso iniziare. Nessuna proposta, solo una conversazione.
+
+Una breve call nei prossimi giorni può andare bene?
+
+Andrea`},
+};
+
+/* ============================================================
+   SCORING LOGIC
+   ============================================================ */
+
+function scoreQuizA(answers){           // answers = array of selected option objects
+  const t={P1:0,P2:0,P3:0};
+  let excluded=false;
+  answers.forEach((opt,i)=>{
+    for(const k in opt.s) t[k]+=opt.s[k];
+    if(i===1 && opt.exclude) excluded=true;   // Q2 = answer 4
+  });
+  let email;
+  if(excluded)            email="⚠ Not a fit — Temporary PM likely not relevant";
+  else if(t.P1>=6)        email="Profile 1 — Urgent, high impact, no PM in place";
+  else if(t.P2>=6)        email="Profile 2 — Upcoming project, no identified leader";
+  else if(t.P1<4 && t.P2<6 && t.P3>=6) email="Profile 3 — Proactive, internal capability exists";
+  else                    email="Profile 2 — Upcoming project, no identified leader"; // sensible fallback
+  return {track:"A",scores:t,result:email};
+}
+
+function scoreQuizB(answers){
+  const t={PMF:0,PMS:0,MAP:0,PIR:0};
+  answers.forEach(opt=>{ for(const k in opt.s) t[k]+=opt.s[k]; });
+  const {PMF,PMS,MAP,PIR}=t;
+  let bundle;
+  if(PMF>=6 && PMS>=4 && MAP>=3 && PIR>=3) bundle="Bundle 8 — Full diagnostic, let's talk";
+  else if(PMF>=6 && PMS<4)                 bundle="Bundle 1 — PM Function Implementation";
+  else if(PMF>=6 && PMS>=4 && MAP<3)       bundle="Bundle 2 — PM Function Implementation + PM Support";
+  else if(PMF>=6 && MAP>=3)                bundle="Bundle 3 — PM Function Implementation + Process Mapping";
+  else if(PMF<4 && PMS>=4 && MAP<3 && PIR<3) bundle="Bundle 4 — PM Support";
+  else if(PMF<4 && PMS>=4 && PIR>=3)       bundle="Bundle 5 — PM Support + Project Intelligence Reporting";
+  else if(MAP>=3 && PIR>=3)                bundle="Bundle 6 — Process Mapping + Project Intelligence Reporting";
+  else if(PMF<4 && PMS<4 && MAP<3 && PIR>=3) bundle="Bundle 7 — Project Intelligence Reporting";
+  else                                     bundle="Bundle 8 — Full diagnostic, let's talk"; // catch-all
+  return {track:"B",scores:t,result:bundle};
+}
+
+/* ============================================================
+   STATE + FLOW
+   ============================================================ */
+
+let activeQuiz=null, qIndex=0, answers=[], currentSel=null;
+
+const el=id=>document.getElementById(id);
+const screens={intent:el("s-intent"),question:el("s-question"),dash:el("s-dash"),form:el("s-form"),done:el("s-done")};
+
+function show(name){
+  Object.values(screens).forEach(s=>s.classList.remove("active"));
+  screens[name].classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateProgress(){
+  const total=activeQuiz.questions.length;
+  el("progressShell").style.display="block";
+  const pct=Math.round((qIndex/total)*100);
+  el("pFill").style.width=pct+"%";
+  el("pLabel").textContent=(LANG==="it"?`Domanda ${qIndex+1} di ${total}`:`Question ${qIndex+1} of ${total}`);
+  el("pPct").textContent=pct+"%";
+}
+
+function renderQuestion(){
+  const item=activeQuiz.questions[qIndex];
+  el("qCount").textContent=`${String(qIndex+1).padStart(2,"0")} / ${String(activeQuiz.questions.length).padStart(2,"0")}`;
+  el("qText").textContent=L(item.q);
+  const box=el("qOptions"); box.innerHTML="";
+  currentSel=answers[qIndex]!==undefined?answers[qIndex]:null;
+
+  item.a.forEach((opt,i)=>{
+    const b=document.createElement("button");
+    b.className="opt"+(currentSel===i?" sel":"");
+    b.innerHTML=`<span class="opt-dot"></span><span>${L(opt.t)}</span>`;
+    b.onclick=()=>{
+      currentSel=i;
+      [...box.children].forEach(c=>c.classList.remove("sel"));
+      b.classList.add("sel");
+      el("nextBtn").disabled=false;
+    };
+    box.appendChild(b);
+  });
+
+  el("nextBtn").disabled=(currentSel===null);
+  el("nextBtn").textContent=(qIndex===activeQuiz.questions.length-1)?L(I18N["qz.btn.finish"]):L(I18N["qz.btn.continue"]);
+  el("backBtn").classList.toggle("hidden",qIndex===0);
+  updateProgress();
+}
+
+function startQuiz(track){
+  activeQuiz = (track==="A")?QUIZ_A:QUIZ_B;
+  activeQuiz._track=track;
+  qIndex=0; answers=[];
+  show("question");
+  renderQuestion();
+}
+
+/* intent cards */
+document.querySelectorAll("#quiz .card").forEach(card=>{
+  card.onclick=()=>startQuiz(card.dataset.intent);
+});
+
+/* next */
+el("nextBtn").onclick=()=>{
+  if(currentSel===null) return;
+  answers[qIndex]=currentSel;
+  if(qIndex<activeQuiz.questions.length-1){
+    qIndex++; renderQuestion();
+  }else{
+    finishQuiz();
+  }
+};
+
+/* back */
+el("backBtn").onclick=()=>{
+  if(qIndex>0){ qIndex--; renderQuestion(); }
+};
+
+/* ============================================================
+   DASHBOARD — Project Readiness model
+   Answers in the doc are ordered worst→best. Each selected
+   answer's position (0..3) maps to a readiness value:
+     pos0 = 0   pos1 = 33   pos2 = 67   pos3 = 100
+   Dimensions group the questions that measure them. The overall
+   Project Readiness Score is the average across all dimensions.
+   Each dimension carries an opening sentence per band that
+   describes the situation the client is in for that area — no
+   judgement, framed as a starting point with room to grow.
+   ============================================================ */
+
+const POS_READINESS=[0,33,67,100];
+
+// band index from a 0..100 value: 0 low, 1 mid, 2 good, 3 strong
+function bandOf(v){ if(v<35)return 0; if(v<60)return 1; if(v<82)return 2; return 3; }
+
+// Each dimension: questions that feed it + an opening "situation"
+// sentence for each band (low → strong).
+const DIMS={
+  A:[
+    {key:"own", label:{en:"Ownership",it:"Responsabilit\u00e0 (ownership)"}, q:[0], lines:[
+      {en:"Right now this project would land on someone already busy with their main role \u2014 there's no dedicated owner with the time to steer it.",it:"In questo momento il progetto ricadrebbe su qualcuno gi\u00e0 impegnato nel proprio ruolo principale: non c'\u00e8 un responsabile dedicato con il tempo per guidarlo."},
+      {en:"There's some structure to lean on, but clear ownership of this project isn't fully settled yet.",it:"C'\u00e8 una certa struttura su cui appoggiarsi, ma una chiara responsabilit\u00e0 del progetto non \u00e8 ancora del tutto definita."},
+      {en:"You have a reasonable handle on who would take charge \u2014 the foundation for solid ownership is there.",it:"C'\u00e8 una buona idea di chi se ne farebbe carico: le basi per una solida responsabilit\u00e0 ci sono."},
+      {en:"Ownership is clear and well placed; someone can realistically take this project end to end.",it:"La responsabilit\u00e0 \u00e8 chiara e ben assegnata; c'\u00e8 chi pu\u00f2 realisticamente seguire il progetto dall'inizio alla fine."}]},
+    {key:"need", label:{en:"Delivery readiness",it:"Prontezza alla consegna"}, q:[1], lines:[
+      {en:"A project needs to move forward, but the knowledge and capacity to run it properly aren't in place yet.",it:"C'\u00e8 un progetto da far avanzare, ma le conoscenze e la capacit\u00e0 per gestirlo adeguatamente non sono ancora presenti."},
+      {en:"The project is taking shape, though the person to lead it end to end hasn't been pinned down.",it:"Il progetto sta prendendo forma, anche se non \u00e8 ancora stata individuata la persona che lo guidi dall'inizio alla fine."},
+      {en:"You're setting this up thoughtfully, with a view to structuring it well from the start.",it:"Lo si sta impostando con attenzione, nell'ottica di strutturarlo bene fin dall'inizio."},
+      {en:"Delivery is well prepared \u2014 the project has direction and someone ready to drive it.",it:"La consegna \u00e8 ben preparata: il progetto ha una direzione e qualcuno pronto a guidarlo."}]},
+    {key:"impact", label:{en:"Business stakes",it:"Posta in gioco per il business"}, q:[2], lines:[
+      {en:"The stakes are high here \u2014 a slip would hit revenue or a key client relationship directly.",it:"La posta in gioco \u00e8 alta: un passo falso colpirebbe direttamente i ricavi o una relazione chiave con un cliente."},
+      {en:"A delay would set back a strategic goal or growth initiative, so timing carries real weight.",it:"Un ritardo comprometterebbe un obiettivo strategico o un'iniziativa di crescita, quindi la tempistica ha un peso reale."},
+      {en:"The impact of a slip is contained, though the cost in time and effort still matters.",it:"L'impatto di un passo falso \u00e8 contenuto, anche se il costo in termini di tempo e impegno resta rilevante."},
+      {en:"Exposure is low; a delay wouldn't put critical outcomes at risk.",it:"L'esposizione \u00e8 bassa; un ritardo non metterebbe a rischio risultati critici."}]},
+    {key:"orient", label:{en:"Future outlook",it:"Prospettiva futura"}, q:[3], lines:[
+      {en:"The focus is squarely on this one project, with little structure yet to build on for what comes next.",it:"L'attenzione \u00e8 tutta su questo singolo progetto, con ancora poca struttura su cui costruire per ci\u00f2 che verr\u00e0 dopo."},
+      {en:"Delivering this project and building something more lasting matter about equally to you.",it:"Realizzare questo progetto e costruire qualcosa di pi\u00f9 duraturo hanno all'incirca la stessa importanza."},
+      {en:"Some internal structure already exists \u2014 this project sits on top of it.",it:"Una certa struttura interna esiste gi\u00e0: questo progetto vi si appoggia."},
+      {en:"The longer-term picture is clearly in view, well beyond this single project.",it:"Il quadro di lungo periodo \u00e8 ben chiaro, ben oltre questo singolo progetto."}]},
+  ],
+  B:[
+    {key:"gov", label:{en:"Structure & governance",it:"Struttura e governance"}, q:[0,5], lines:[
+      {en:"Projects tend to start without a clear framework and close without capturing what was learned \u2014 so the same lessons resurface each time.",it:"I progetti tendono ad avviarsi senza un framework chiaro e a chiudersi senza raccogliere quanto appreso: cos\u00ec le stesse lezioni si ripresentano ogni volta."},
+      {en:"Some structure exists at kickoff, but it doesn't always hold through delivery or feed into the next project.",it:"Una certa struttura esiste al kickoff, ma non sempre regge durante la realizzazione n\u00e9 alimenta il progetto successivo."},
+      {en:"Projects generally start and close with a recognisable structure to lean on.",it:"I progetti in genere si avviano e si chiudono con una struttura riconoscibile su cui appoggiarsi."},
+      {en:"Governance is a real strength \u2014 projects open and close consistently, and lessons carry forward.",it:"La governance \u00e8 un vero punto di forza: i progetti si aprono e si chiudono in modo coerente e le lezioni vengono portate avanti."}]},
+    {key:"align", label:{en:"Alignment",it:"Allineamento"}, q:[1], lines:[
+      {en:"Priorities pull in different directions across stakeholders, which makes a shared path hard to hold.",it:"Le priorit\u00e0 tirano in direzioni diverse tra gli stakeholder, il che rende difficile mantenere un percorso condiviso."},
+      {en:"Direction tends to shift depending on who's leading at the moment, so alignment comes and goes.",it:"La direzione tende a cambiare a seconda di chi guida in quel momento, quindi l'allineamento va e viene."},
+      {en:"Intentions are broadly aligned, even if delivery sometimes drifts from the stated plan.",it:"Le intenzioni sono nel complesso allineate, anche se la realizzazione a volte si discosta dal piano dichiarato."},
+      {en:"Stakeholders pull in the same direction, with clear ownership of outcomes.",it:"Gli stakeholder tirano nella stessa direzione, con una chiara responsabilit\u00e0 sui risultati."}]},
+    {key:"control", label:{en:"Control & response",it:"Controllo e risposta"}, q:[2,3], lines:[
+      {en:"Issues tend to be handled reactively, case by case, often absorbing more time and resources than they should.",it:"Le criticit\u00e0 tendono a essere gestite in modo reattivo, caso per caso, assorbendo spesso pi\u00f9 tempo e risorse del dovuto."},
+      {en:"Critical issues get resolved, but usually by leaning on senior people rather than a repeatable approach.",it:"Le criticit\u00e0 vengono risolte, ma di solito affidandosi alle persone senior pi\u00f9 che a un approccio ripetibile."},
+      {en:"Most issues are caught and managed before they grow into something larger.",it:"La maggior parte dei problemi viene intercettata e gestita prima che diventi qualcosa di pi\u00f9 grande."},
+      {en:"Issues are consistently resolved within time and cost \u2014 control here is a strength.",it:"Le criticit\u00e0 vengono risolte con costanza nel rispetto di tempi e costi: qui il controllo \u00e8 un punto di forza."}]},
+    {key:"vis", label:{en:"Visibility & reporting",it:"Visibilit\u00e0 e reporting"}, q:[4], lines:[
+      {en:"Getting a clear, real-time picture of where projects stand takes effort \u2014 the information is scattered or held by individuals.",it:"Ottenere un quadro chiaro e in tempo reale dello stato dei progetti richiede sforzo: le informazioni sono sparse o detenute dalle singole persone."},
+      {en:"Reporting exists, but the data is often incomplete, late, or hard to rely on.",it:"Il reporting esiste, ma i dati sono spesso incompleti, in ritardo o poco affidabili."},
+      {en:"Reporting gives leadership a fairly dependable view of project status.",it:"Il reporting offre ai vertici una visione abbastanza affidabile dello stato dei progetti."},
+      {en:"Reporting is timely and consistent, giving leadership exactly what it needs.",it:"Il reporting \u00e8 puntuale e coerente, e fornisce ai vertici esattamente ci\u00f2 di cui hanno bisogno."}]},
+  ]
+};
+
+const LEVELS=[
+  {min:0,  name:{en:"Foundations",it:"Fondamenta"}, desc:{en:"You're at the early stage of building project structure \u2014 a clear starting point with plenty of room to grow.",it:"Sei nelle prime fasi della costruzione di una struttura di progetto: un punto di partenza chiaro, con ampio margine di crescita."}},
+  {min:35, name:{en:"Building",it:"In costruzione"}, desc:{en:"The groundwork is forming. A few targeted moves would help it hold more consistently across projects.",it:"Le basi si stanno formando. Alcune mosse mirate aiuterebbero a renderle pi\u00f9 solide e costanti tra i progetti."}},
+  {min:60, name:{en:"Established",it:"Consolidato"}, desc:{en:"You have a working structure in place. The opportunity now is sharpening control and visibility.",it:"Hai una struttura funzionante. L'opportunit\u00e0 ora \u00e8 affinare controllo e visibilit\u00e0."}},
+  {min:82, name:{en:"Advanced",it:"Avanzato"}, desc:{en:"Project management is already a strength here \u2014 the focus shifts to fine-tuning and scaling it.",it:"Qui il project management \u00e8 gi\u00e0 un punto di forza: l'attenzione si sposta sull'ottimizzazione e sulla scalabilit\u00e0."}},
+];
+
+function levelFor(score){
+  let l=LEVELS[0];
+  for(const lv of LEVELS) if(score>=lv.min) l=lv;
+  return l;
+}
+
+function buildDashboard(chosenPositions, track){
+  const dims=DIMS[track];
+  const scored=dims.map(d=>{
+    const vals=d.q.map(qi=>POS_READINESS[chosenPositions[qi]]);
+    const v=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+    return {key:d.key,label:d.label,value:v,line:d.lines[bandOf(v)]};
+  });
+  const overall=Math.round(scored.reduce((a,d)=>a+d.value,0)/scored.length);
+  // weakest areas first; surface those below "good" (cap at 3, min 1)
+  const sorted=[...scored].sort((a,b)=>a.value-b.value);
+  let weak=sorted.filter(d=>d.value<60).slice(0,3);
+  if(weak.length===0) weak=[sorted[0]];   // always show at least one growth area
+  return {overall,level:levelFor(overall),dims:scored,weak};
+}
+
+/* ---------- radar renderer ---------- */
+function renderRadar(dims){
+  const svg=el("radarSvg");
+  const cx=220, cy=140, R=80, n=dims.length;
+  const ang=i=>(-Math.PI/2)+(i*2*Math.PI/n);
+  const pt=(i,r)=>[cx+Math.cos(ang(i))*r, cy+Math.sin(ang(i))*r];
+  let s="";
+  // concentric grid rings
+  [0.25,0.5,0.75,1].forEach(f=>{
+    let p=dims.map((_,i)=>pt(i,R*f).join(",")).join(" ");
+    s+=`<polygon class="radar-grid" points="${p}"></polygon>`;
+  });
+  // axes + labels
+  dims.forEach((d,i)=>{
+    const[ex,ey]=pt(i,R);
+    s+=`<line class="radar-axis" x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}"></line>`;
+    const[lx,ly]=pt(i,R+26);
+    let anchor= Math.abs(lx-cx)<8?"middle":(lx>cx?"start":"end");
+    // wrap label into <=2 lines
+    const words=L(d.label).split(" ");
+    const l1=words.slice(0,Math.ceil(words.length/2)).join(" ");
+    const l2=words.slice(Math.ceil(words.length/2)).join(" ");
+    s+=`<text class="radar-label" x="${lx}" y="${ly-(l2?5:0)}" text-anchor="${anchor}">${l1}</text>`;
+    if(l2) s+=`<text class="radar-label" x="${lx}" y="${ly+8}" text-anchor="${anchor}">${l2}</text>`;
+  });
+  // data shape
+  const shape=dims.map((d,i)=>pt(i,R*(d.value/100)).join(",")).join(" ");
+  s+=`<polygon class="radar-shape" id="radarShape" points="${dims.map((_,i)=>[cx,cy].join(",")).join(" ")}"></polygon>`;
+  // dots
+  dims.forEach((d,i)=>{ const[x,y]=pt(i,R*(d.value/100)); s+=`<circle class="radar-dot" cx="${x}" cy="${y}" r="3"></circle>`; });
+  svg.innerHTML=s;
+  // animate shape from center to final
+  requestAnimationFrame(()=>{ const sh=el("radarShape"); if(sh){ sh.style.transition="all .9s cubic-bezier(.22,1,.36,1)"; sh.setAttribute("points",shape);} });
+}
+
+function tagFor(v){
+  if(v<35) return {t:(LANG==="it"?"Priorit\u00e0 assoluta":"Top priority"),bg:"#fdecea",c:"#c0392b"};
+  return {t:(LANG==="it"?"Margine di crescita":"Room to grow"),bg:"#fbf2e4",c:"#b9760f"};
+}
+
+function renderDashboard(dash){
+  // animated ring
+  const C=2*Math.PI*52;
+  el("scoreVal").textContent="0";
+  el("ringFg").style.strokeDashoffset=C;
+  setTimeout(()=>{
+    el("ringFg").style.strokeDashoffset=C*(1-dash.overall/100);
+    let n=0; const step=Math.max(1,Math.round(dash.overall/40));
+    const iv=setInterval(()=>{ n+=step; if(n>=dash.overall){n=dash.overall;clearInterval(iv);} el("scoreVal").textContent=n; },22);
+  },120);
+  el("scoreLevel").textContent=L(dash.level.name);
+  el("scoreDesc").textContent=L(dash.level.desc);
+
+  renderRadar(dash.dims);
+
+  const box=el("growthList"); box.innerHTML="";
+  const lastIdx=dash.weak.length-1;
+  dash.weak.forEach((d,i)=>{
+    const tag=tagFor(d.value);
+    const locked = (dash.weak.length>1 && i!==lastIdx);  // only the last item is readable
+    const div=document.createElement("div");
+    div.className="growth-item"+(locked?" locked":"");
+    div.innerHTML=
+      `<div class="growth-mark">${String(i+1).padStart(2,"0")}</div>
+       <div class="growth-body">
+         <div class="growth-dim">${L(d.label)}
+           <span class="growth-tag" style="background:${tag.bg};color:${tag.c}">${tag.t}</span>
+         </div>
+         <div class="growth-line">${L(d.line)}</div>
+       </div>`;
+    box.appendChild(div);
+  });
+}
+
+/* ============================================================
+   FINISH + SUBMIT  (merged-site version)
+   - "Not a fit" outcome  -> jump straight to the site Contact
+     page (#contact), carrying over any details already typed.
+   - Every other outcome -> show dashboard, then on submit open
+     a mailto: to hello@vektorpm.com with the profile template
+     followed by the full assessment dashboard, in plain text.
+   ============================================================ */
+
+const CONTACT_EMAIL = "hello@vektorpm.com";
+const NOT_A_FIT = "\u26a0 Not a fit \u2014 Temporary PM likely not relevant";
+
+/* readiness band -> short label used in the email summary */
+function readinessTag(v){ if(LANG==="it"){ return v<35?"Priorit\u00e0 assoluta":(v<60?"Margine di crescita":(v<82?"In linea":"Punto di forza")); } return v<35 ? "Top priority" : (v<60 ? "Room to grow" : (v<82 ? "On track" : "Strength")); }
+
+/* build the plain-text dashboard summary appended to the email */
+function dashboardText(dash, res){
+  const it = (LANG==="it");
+  const rows = [];
+  rows.push("----------------------------------------");
+  rows.push(it?"RIEPILOGO VALUTAZIONE":"ASSESSMENT SUMMARY");
+  rows.push("----------------------------------------");
+  rows.push(`${it?"Readiness complessiva":"Overall readiness"}: ${dash.overall}/100 \u2014 ${L(dash.level.name)}`);
+  rows.push(`${it?"Esito corrispondente":"Matched outcome"}: ${res.result}`);
+  rows.push("");
+  rows.push(it?"Readiness per area:":"Readiness by area:");
+  dash.dims.forEach(d=>{
+    rows.push(`- ${L(d.label)}: ${d.value}/100 \u2014 ${readinessTag(d.value)}`);
+  });
+  rows.push("");
+  rows.push(it?"Aree prioritarie di crescita:":"Priority growth areas:");
+  dash.weak.forEach((d,i)=>{ rows.push(`${i+1}. ${L(d.label)} (${d.value}/100)`); });
+  return rows.join("\n");
+}
+
+function finishQuiz(){
+  const chosen=answers.map((sel,i)=>activeQuiz.questions[i].a[sel]);
+  const positions=answers.slice();
+  const result=(activeQuiz._track==="A")?scoreQuizA(chosen):scoreQuizB(chosen);
+
+  window._vektorResult=result;
+
+  // --- "Not a fit": skip the dashboard, send them to the site Contact page ---
+  if(result.result===NOT_A_FIT){
+    // carry over anything already typed in the quiz form (usually empty at this point)
+    const qn=el("fName"), qe=el("fEmail"), qm=el("fMsg");
+    const cn=document.getElementById("c-name");
+    const ce=document.getElementById("c-email");
+    const cm=document.getElementById("c-message");
+    if(cn && qn && qn.value.trim()) cn.value=qn.value.trim();
+    if(ce && qe && qe.value.trim()) ce.value=qe.value.trim();
+    if(cm && qm && qm.value.trim()) cm.value=qm.value.trim();
+    el("progressShell").style.display="none";
+    location.hash="contact";
+    return;
+  }
+
+  const dash=buildDashboard(positions, activeQuiz._track);
+  window._vektorDash=dash;
+  el("progressShell").style.display="none";
+  show("dash");
+  renderDashboard(dash);
+}
+
+/* dashboard -> form */
+el("toFormBtn").onclick=()=>{ show("form"); };
+
+/* form -> back to dashboard */
+el("formBack").onclick=()=>{ show("dash"); };
+
+/* submit -> open the visitor's mail client to hello@vektorpm.com */
+el("submitBtn").onclick=()=>{
+  const name=el("fName").value.trim();
+  const email=el("fEmail").value.trim();
+  const company=el("fCompany").value.trim();
+  const extra=el("fMsg").value.trim();
+  if(!name||!email){
+    alert(LANG==="it"?"Inserisci il tuo nome e la tua email per essere ricontattato.":"Please add your name and email so I can get back to you.");
+    return;
+  }
+
+  const it=(LANG==="it");
+  const res=window._vektorResult;
+  const dash=window._vektorDash;
+  const tmpl=(L(EMAILS[res.result])||"").replace(/\[Name\]/g, name);
+
+  // body: greeting + intro + dashboard summary + template + details
+  const parts=[];
+  parts.push(it?`Ciao Andrea,`:`Hi Andrea,`);
+  parts.push(``);
+  parts.push(it?`Qui sotto puoi vedere i risultati della mia valutazione.`:`Here below you can see the results of my assessment.`);
+  parts.push(``);
+  if(dash) parts.push(dashboardText(dash,res));
+  parts.push(``);
+  parts.push(`----------------------------------------`);
+  parts.push(``);
+  if(tmpl) parts.push(tmpl);
+  parts.push(``);
+  parts.push(`----------------------------------------`);
+  parts.push(it?`I MIEI DATI`:`MY DETAILS`);
+  parts.push(`----------------------------------------`);
+  parts.push((it?`Nome: `:`Name: `)+name);
+  parts.push(`Email: ${email}`);
+  if(company) parts.push((it?`Azienda: `:`Company: `)+company);
+  if(extra){ parts.push(``); parts.push((it?`Note: `:`Notes: `)+extra); }
+
+  const body=parts.join("\n");
+
+  window.location.href = "mailto:"+CONTACT_EMAIL
+    + "?subject="+encodeURIComponent(SUBJECT[LANG]||SUBJECT.en)
+    + "&body="+encodeURIComponent(body);
+
+  show("done");
+};
+
+/* re-render the live quiz screen when the language is switched mid-flow */
+window.__quizRelang = function(){
+  // currently visible screen
+  if(screens.question && screens.question.classList.contains("active") && activeQuiz){
+    renderQuestion();
+  }
+  if(screens.dash && screens.dash.classList.contains("active") && window._vektorDash){
+    renderDashboard(window._vektorDash);
+  }
+};
+})();
+</script>
+</body>
+</html>
